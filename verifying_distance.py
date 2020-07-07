@@ -1,4 +1,4 @@
-# Created by Tedi Miitku 07/07/20
+# Created by Tedi Mitiku 07/07/20
 # This script is for verifying our euclidean distance assumption on
 # the 7D Googler attribute vector space.
 import math
@@ -11,7 +11,7 @@ googler_data = pd.read_csv("data/googler_attribute_table.csv")
 googler_data = googler_data.fillna(0) #Replace null values with 0
 
 
-#Normalizing data
+#Normalizing data incorporated by Kayla Patterson
 from sklearn.preprocessing import MinMaxScaler
 min_max_scaler = MinMaxScaler()
 googler_data.iloc[:,0:7] = min_max_scaler.fit_transform(googler_data.iloc[:,0:7])
@@ -66,5 +66,6 @@ def sample(num, size):
                                             ignore_index=True)
     return random_sample
 
-test_data = sample(5,5)
+#Sample 10 pairs from Googlers with user id 0-10
+test_data = sample(10,10)
 test_data.to_csv(path_or_buf="data/test_data.csv", index=False)
