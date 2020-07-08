@@ -61,7 +61,7 @@ def sample(num, low, high, distance):
 
         random_sample = random_sample.append({"user_one_id": user_one_id,
                                             "user_two_id": user_two_id,
-                                            "l2": l2 },
+                                            "distance": l2 },
                                             ignore_index=True)
     return random_sample
 
