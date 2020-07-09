@@ -12,8 +12,8 @@ class Row:
     def __init__(self,user_id,access_date,access_hour,access_minute,resource_attr_1,resource_attr_2,reader_number):
         self.user_id = int(user_id)
         self.access_date = access_date
-        self.access_hour = access_hour
-        self.access_minute = access_minute
+        self.access_hour = int(access_hour)
+        self.access_minute = int(access_minute)
         self.resource_attr_1 = resource_attr_1
         self.resource_attr_2 = resource_attr_2
         self.reader_number = reader_number
@@ -27,7 +27,6 @@ class Row:
         if not isinstance(other, type(self)):
             return NotImplemented
         return self.user_id < other.user_id
-
 
 def write_csv_out(rows, out_path):
     with open(out_path, 'a') as csv_file:
@@ -108,12 +107,12 @@ def external_sort(dataframe,output_path):
         os.remove(f)
 
 
+if __name__ ==  "__main__":
+    #number of lines per chunk. This should be changed based on how much ram is avaliable
+    chunk_size = 100000
 
-#number of lines per chunk. This should be changed based on how much ram is avaliable
-chunk_size = 100000
+    input_path = os.path.expanduser("~/data/user_resources.csv")
+    output_path = os.path.expanduser("./sorted_user_resources.csv")
 
-input_path = os.path.expanduser("~/data/user_resources.csv")
-output_path = os.path.expanduser("./sorted_user_resources.csv")
-
-reader = pd.read_csv(input_path,chunksize=chunk_size)
-external_sort(reader,output_path)
+    reader = pd.read_csv(input_path,chunksize=chunk_size)
+    external_sort(reader,output_path)
