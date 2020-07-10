@@ -4,6 +4,7 @@ import os
 import unittest
 
 class TestExternalSortAccuracy(unittest.TestCase):
+    # Tests that external_sort sorts accurately
     def test_accuracy(self):
         input_path = os.path.expanduser("~/data/user_resources.csv")
         test_path = os.path.expanduser("./testing_dataset.csv")
@@ -14,7 +15,8 @@ class TestExternalSortAccuracy(unittest.TestCase):
         internal_sorted = df.sort_values(by=['user_id'])
         internal_sorted.reset_index(drop=True,inplace=True)
 
-        #make sure that we have the same (types are not preserved when writting to csv) 
+        # make sure that we have the same
+        # (types are not preserved when writting to csv) 
         internal_sorted['user_id'] = pd.to_numeric(internal_sorted['user_id'])
         external_sorted['user_id'] = pd.to_numeric(external_sorted['user_id'])
         
