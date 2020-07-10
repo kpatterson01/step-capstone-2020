@@ -9,7 +9,8 @@ import glob
 class Row:
     #this is a custom class for the row data in our user_resources dataset.
     #the purpose of this is so we can create a heap for mering chunks
-    def __init__(self,user_id,access_date,access_hour,access_minute,resource_attr_1,resource_attr_2,reader_number):
+    def __init__(self,user_id,access_date,access_hour,access_minute,
+            resource_attr_1,resource_attr_2,reader_number):
         self.user_id = int(user_id)
         self.access_date = access_date
         self.access_hour = int(access_hour)
@@ -32,8 +33,8 @@ def write_csv_out(rows, out_path):
     with open(out_path, 'a') as csv_file:
         csv_writer = csv.writer(csv_file)
         for row in rows:
-            info = [row.user_id,row.access_date,row.access_hour,row.access_minute,
-                    row.resource_attr_1,row.resource_attr_2]
+            info = [row.user_id,row.access_date,row.access_hour,
+                    row.access_minute,row.resource_attr_1,row.resource_attr_2]
             csv_writer.writerow(info)
 
 def write_header(header, out_path):
@@ -42,21 +43,23 @@ def write_header(header, out_path):
         csv_writer = csv.writer(csv_file)
         csv_writer.writerow(info)
 
-# This is an external sort for CSV files. It is suited for our specific dataset but could be modified
+# This is an external sort for CSV files.
+# It is suited for our specific dataset but could be modified
 # Algorithm info:
 # read and sort a chunk of the data using conventional methods
 # write sorted data to disk
 # repeat until all data is in sorted chunks
 # read small amount from each chunk
 # merge these mini-chunks
-# In particular, I merge these mini-chunks with a min-heap. I load the first element from each chunk into the heap
-# then I pop the top of the minheap and add another item from the chunk that the item which was popped origninated from
-# complexity: nlog(n), the sorting part is obviously nlog(n) and the merging part is more or less a heap-sort so it
-# is also nlog(n).
+# In particular, I merge these mini-chunks with a min-heap. I load the first 
+# element from each chunk into the heap then I pop the top of the minheap and
+# add another item from the chunk that the item which was popped origninated from
+# complexity: nlog(n), the sorting part is nlog(n) and the merging part is
+# more or less a heap-sort so it is also nlog(n).
 #
 # visit https://en.wikipedia.org/wiki/External_sorting for more info
 def external_sort(dataframe,output_path):
-    # chunk the csv into chunks of size chunk_size and sort these chunks by user_id
+    # chunk the csv into chunks size chunk_size and sort these chunks by user_id
     # write these sorted chunks to temporary files
     chunk_number = 0
     for chunk in dataframe:
@@ -108,7 +111,7 @@ def external_sort(dataframe,output_path):
 
 
 if __name__ ==  "__main__":
-    #number of lines per chunk. This should be changed based on how much ram is avaliable
+    #row per chunk. This should be changed based on how much ram is avaliable
     chunk_size = 100000
 
     input_path = os.path.expanduser("~/data/user_resources.csv")
