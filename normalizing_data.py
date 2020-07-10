@@ -15,7 +15,7 @@ def normalize(data, cols):
         cols(int): The # of columns in data to normalize 
 
     Returns:
-        data(DataFrame): Normalized data in a DataFrame 
+        void: Changes DataFrame values inplace
 
     """
     min_max_scaler = MinMaxScaler()
