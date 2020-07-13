@@ -14,9 +14,6 @@ def normalize(data, cols):
         data(DataFrame): The data in the DataFrame
         cols(int): The # of columns in data to normalize
 
-    Returns:
-        data(DataFrame): Normalized data in a DataFrame
-
     """
     min_max_scaler = MinMaxScaler()
     data.iloc[:,0:cols] = min_max_scaler.fit_transform(data.iloc[:,0:cols])
