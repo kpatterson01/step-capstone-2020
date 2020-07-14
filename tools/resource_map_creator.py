@@ -1,3 +1,6 @@
+# This file saves the dictionary of the resources to the set of useres
+# as a pickle file. It also contains the Resource class
+
 import pandas as pd
 import os.path
 import timeit 
