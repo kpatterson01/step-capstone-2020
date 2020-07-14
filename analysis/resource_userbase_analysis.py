@@ -1,5 +1,7 @@
 import pandas as pd
 import os.path
+import timeit 
+
 
 class Resource:
 
@@ -13,9 +15,13 @@ class Resource:
         else:
             return self.attr_1 == other.attr_1 and self.attr_2 == other.attr_2
 
+    # We hash resources based off of attr1 and attr2
+    # This technique is called cantor pairing
+    # See en.wikipedia.org/wiki/Pairing_function for more information
     def __hash__(self):
-        string_representation = "%d-%d" % (self.attr_1,self.attr_2)
-        return hash(string_representation)
+        return (((self.attr_1+self.attr_2+1)*(self.attr_1+self.attr_2)//2)
+                +self.attr_2) 
+        
 
 
 def overlap_ratio(set1, set2):
@@ -27,6 +33,8 @@ input_path = os.path.expanduser("~/data/sorted_user_resources.csv")
 reader = pd.read_csv(input_path, chunksize = 100000)
 resource_users = {}
 
+start = timeit.default_timer()
+
 for chunk in reader:
     for index, row in chunk.iterrows():
         resource = Resource(row['resource_attr_1'],row['resource_attr_2'])
@@ -35,11 +43,5 @@ for chunk in reader:
         else:
             resource_users[resource] = {row['user_id']}
 
-set_itr = iter(resource_users.values())
-
-sets = []
-for i in range(10):
-    sets.append(next(set_itr))
-
-for s in sets:
-    print(overlap_ratio(s,next(set_itr)))
+end = timeit.default_timer()
+print("Time: ", start - end)
