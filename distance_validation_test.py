@@ -35,7 +35,7 @@ class TestCosineDistanceFunction(unittest.TestCase):
     def test_zero_distance(self):
         #Ensure that two users that are the same is equal to 1 
         #Cosine Distance is different from Euclidean since when users are the same the
-        #output would be 1, instead of 0. Since, the cosine distance calculates the angle.  
+        #output would be 1, instead of 0. Since, the cosine distance calculates the angle.   
         user_one_attributes = [1, 3, 5, 7, 8, 14]
         result = cosine_distance(user_one_attributes, user_one_attributes)    
         expected = np.array([[1.0]])
