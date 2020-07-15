@@ -12,10 +12,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 #Take in user attribute data as DataFrame
 user_data = pd.read_csv("../../data/googler_attribute_table.csv")
-<<<<<<< HEAD:utilities/distance_validation.py
-
-=======
->>>>>>> tedi:distance_validation.py
 user_data = user_data.fillna(0) #Replace null values with 0
 
 #Variable to adjust features to include (b/c sample data missing a column)
@@ -81,23 +77,14 @@ def sample(num, low, high, distance):
 
         random_sample = random_sample.append({"user_one_id": user_one_id,
                                             "user_two_id": user_two_id,
-<<<<<<< HEAD:utilities/distance_validation.py
                                             "distance": dist},
-=======
-                                            "distance": dist },
->>>>>>> tedi:distance_validation.py
                                             ignore_index=True)
 
     return random_sample
 
 
-<<<<<<< HEAD:utilities/distance_validation.py
 test_l2 = sample(10, 0, 10, l2_distance)
 test_l2.to_csv("../../data/test_distance_l2.csv", index=False)
 
 test_cosine = sample(10, 0, 10, cosine_distance)
 test_cosine.to_csv("../../data/test_distance_cosine.csv", index=False)
-=======
-test_data = sample(10, 0, 10, l2_distance)
-test_data.to_csv(path_or_buf="../../data/distance_test_data.csv", index=False)
->>>>>>> tedi:distance_validation.py

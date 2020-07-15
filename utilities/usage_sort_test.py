@@ -35,3 +35,6 @@ class TestExternalSortAccuracy(unittest.TestCase):
 
         #clean up the file we wrote
         os.remove(test_path)
+
+if __name__ == '__main__':
+    unittest.main()
