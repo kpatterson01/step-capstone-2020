@@ -1,6 +1,6 @@
 
 # **FILENAME SHOULD BE RENAMED**
-# File to output csv for visualizing regression of attribute similarity vs usage similarity.
+# File to output data for visualizing regression of Googler attribute similarity vs usage similarity.
 
 import csv
 import numpy as np

@@ -20,7 +20,5 @@ class TestManagerHierarchy(unittest.TestCase):
     #TODO: Write test cases to ensure manager hierarchy tree is implemented correctly
     return
 
-
-
 if __name__ == '__main__':
     unittest.main()
