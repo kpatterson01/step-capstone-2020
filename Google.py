@@ -16,7 +16,7 @@ class Google:
     """
 
     def __init__(self, googlers):
-        """ Creates Google company
+        """ Creates Google company.
 
         Calls __create_company method which implements manager hierarchy tree based on the list of
         Googlers and their attributes.
@@ -25,7 +25,7 @@ class Google:
             googlers: A list of Googler objects.
         """
         self.ceo = self.__create_company(googlers)
-        self.num_googlers = googlers.length()
+        self.num_googlers = len(googlers)
         self.googlers = googlers
 
     def search(self, googler_id):

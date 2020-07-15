@@ -10,10 +10,10 @@ import pandas as pd
 from Googler import Googler
 from Google import Google
 
-# Read in googler attributes table and sort by manager id
-googler_attributes = pd.read_csv("../data/googler_attributes_table.csv")
-googler_attributes = googler_attributes.sort_values(column=["anon_manager_person_id"], ascending=True)
-googler_attributes.to_csv("../data/sorted_attribute_table_fake.csv")
+# Read in Googler attributes table and sort by manager id
+googler_attributes = pd.read_csv("../data/googler_attribute_table_fake.csv") #NOTE: Currently a fake dataset
+googler_attributes = googler_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
+googler_attributes.to_csv("../data/sorted_attribute_table_fake.csv", index=False)
 print(googler_attributes)
 
 # Read in lines of Googler data and create list of Googler objects
@@ -29,8 +29,15 @@ with open('../data/sorted_attribute_table_fake.csv', 'r') as f:
         attributes["location"] = user[4]
         attributes["lowest_dir_id"] = user[5]
         attributes["job_family"] = user[6]
+        print(attributes)
         googler = Googler(attributes)
         googlers.append(googler)
 
-print(googlers)
-#google_company = Google(googlers)
+googlers = googlers[1:] #Drop labels row
+print(googlers[0].manager_id)
+
+# Create the Google company
+
+# Sample N pairs of Googlers and calculate distance and usage similarity metrics for the pairs
+
+# Output pairs and metrics in a csv

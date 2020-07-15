@@ -1,5 +1,5 @@
 # Created by Tedi Mitiku 07/08/2020
-# Test files for distance_valiation.py
+# Test cases for distance_valiation.py
 
 import unittest
 from distance_validation import l2_distance
@@ -26,3 +26,5 @@ class TestEuclideanDistanceFunction(unittest.TestCase):
         self.assertAlmostEqual(l2_distance(user_two_attributes, user_one_attributes), 1.280624847)
 
 #insert classes for other distance functions we create and need to test
+if __name__ == '__main__':
+    unittest.main()

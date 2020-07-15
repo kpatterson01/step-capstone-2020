@@ -30,13 +30,13 @@ class Googler:
                             job_family: 10 --> Intern-Technical
                             ...
         """
-        self.id = attributes.id
-        self.department = attributes.department
-        self.cost_center = attributes.cost_center
-        self.manager_id = attributes.manager_id
-        self.location = attributes.location
-        self.lowest_dir_id = attributes.lowest_dir_id
-        self.job_family = attributes.job_family
+        self.id = attributes.get("id")
+        self.department = attributes.get("department")
+        self.cost_center = attributes.get("cost_center")
+        self.manager_id = attributes.get("manager_id")
+        self.location = attributes.get("location")
+        self.lowest_dir_id = attributes.get("lowest_dir_id")
+        self.job_family = attributes.get("job_family")
         self.resources = []
         self.reports = []
 
