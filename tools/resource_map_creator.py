@@ -26,29 +26,32 @@ class Resource:
                 +self.attr_2) 
         
 
+    @staticmethod
+    def overlap_ratio(set1, set2):
+        num_in_common = len(set1.intersection(set2))
+        total_unique_elements = len(set1)+len(set2)-num_in_common
+        return num_in_common/total_unique_elements
 
-def overlap_ratio(set1, set2):
-    num_in_common = len(set1.intersection(set2))
-    total_unique_elements = len(set1)+len(set2)-num_in_common
-    return num_in_common/total_unique_elements
 
-input_path = os.path.expanduser("~/data/sorted_user_resources.csv")
-reader = pd.read_csv(input_path, chunksize = 100000)
-resource_users = {}
+if __name__ == "__main__":
 
-start = timeit.default_timer()
+    input_path = os.path.expanduser("~/data/sorted_user_resources.csv")
+    reader = pd.read_csv(input_path, chunksize = 100000)
+    resource_users = {}
 
-for chunk in reader:
-    for index, row in chunk.iterrows():
-        resource = Resource(row['resource_attr_1'],row['resource_attr_2'])
-        if resource in resource_users:
-            resource_users[resource].add(row['user_id'])
-        else:
-            resource_users[resource] = {row['user_id']}
+    start = timeit.default_timer()
 
-end = timeit.default_timer()
-print("Time: ", end - start)
+    for chunk in reader:
+        for index, row in chunk.iterrows():
+            resource = Resource(row['resource_attr_1'],row['resource_attr_2'])
+            if resource in resource_users:
+                resource_users[resource].add(row['user_id'])
+            else:
+                resource_users[resource] = {row['user_id']}
 
-with open(os.path.expanduser("~/data/resource_map.pkl"),"wb") as f:
-    pickle.dump(resource_users,f)
+    end = timeit.default_timer()
+    print("Time: ", end - start)
+
+    with open(os.path.expanduser("~/data/resource_map.pkl"),"wb") as f:
+        pickle.dump(resource_users,f)
 
