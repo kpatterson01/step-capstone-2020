@@ -1,3 +1,4 @@
+
 # Created by Tedi Mitiku 07/07/20
 # This script is for verifying our euclidean distance assumption on
 # the 7D user attribute vector space.
@@ -9,7 +10,7 @@ import pandas as pd
 import normalizing_data
 
 #Take in user attribute data as DataFrame
-user_data = pd.read_csv("../data/googler_attribute_table.csv")
+user_data = pd.read_csv("../../data/googler_attribute_table.csv")
 user_data = user_data.fillna(0) #Replace null values with 0
 
 #Variable to adjust features to include (b/c sample data missing a column)
@@ -22,10 +23,10 @@ print(user_data.head())
 # Create distance function to measure euclidean aka l2 norm distance between two users
 #(Probably want to wrap into a Googler/user class down the line)
 def l2_distance(user_one, user_two):
-    """Return the distance of two users in 7D vector space.
+    """Return the distance of two users in 6D vector space.
     Args:
-        @user_one(1D array): user attribute values in 1x7 array. ex. [3, 5, 6, 6, 9, 10, 0]
-        @user_two(1D array): user attribute values in 1x7 array.
+        @user_one(1D array): user attribute values in 1x6 array. ex. [3, 5, 6, 6, 9, 10, 0]
+        @user_two(1D array): user attribute values in 1x6 array.
 
     Returns:
         int: Euclidean distance between users.
@@ -57,14 +58,14 @@ def sample(num, low, high, distance):
 
         user_one_attributes = user_data.iloc[user_one_id].values[1:num_col+1] #should be [1:8] but sample data is missing a column
         user_two_attributes = user_data.iloc[user_two_id].values[1:num_col+1]
-        l2 = distance(user_one_attributes, user_two_attributes)
+        dist = distance(user_one_attributes, user_two_attributes)
 
         random_sample = random_sample.append({"user_one_id": user_one_id,
                                             "user_two_id": user_two_id,
-                                            "distance": l2 },
+                                            "distance": dist },
                                             ignore_index=True)
     return random_sample
 
 
 test_data = sample(10, 0, 10, l2_distance)
-test_data.to_csv(path_or_buf="../data/test_data.csv", index=False)
+test_data.to_csv(path_or_buf="../../data/distance_test_data.csv", index=False)
