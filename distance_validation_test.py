@@ -3,9 +3,11 @@
 
 import unittest
 from distance_validation import l2_distance
+
 from distance_validation import cosine_distance 
 import math,random
 import numpy as np
+import math,random
 
 class TestEuclideanDistanceFunction(unittest.TestCase):
     def test_zero_distance(self):
@@ -56,7 +58,3 @@ class TestCosineDistanceFunction(unittest.TestCase):
         result = cosine_distance(user_one_attributes, user_two_attributes)
         expected = np.array([[0.884321]])
         np.testing.assert_array_almost_equal(result, expected)
-
-
-    
-
