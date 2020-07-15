@@ -1,3 +1,4 @@
+
 # Created by Tedi Mitiku 07/07/20
 # This script is for verifying our euclidean distance assumption on
 # the 7D user attribute vector space.
@@ -11,7 +12,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 #Take in user attribute data as DataFrame
 user_data = pd.read_csv("../../data/googler_attribute_table.csv")
+<<<<<<< HEAD:utilities/distance_validation.py
 
+=======
+>>>>>>> tedi:distance_validation.py
 user_data = user_data.fillna(0) #Replace null values with 0
 
 #Variable to adjust features to include (b/c sample data missing a column)
@@ -24,10 +28,10 @@ print(user_data.head())
 # Create distance function to measure euclidean aka l2 norm distance between two users
 #(Probably want to wrap into a Googler/user class down the line)
 def l2_distance(user_one, user_two):
-    """Return the distance of two users in 7D vector space.
+    """Return the distance of two users in 6D vector space.
     Args:
-        @user_one(1D array): user attribute values in 1x7 array. ex. [3, 5, 6, 6, 9, 10, 0]
-        @user_two(1D array): user attribute values in 1x7 array.
+        @user_one(1D array): user attribute values in 1x6 array. ex. [3, 5, 6, 6, 9, 10, 0]
+        @user_two(1D array): user attribute values in 1x6 array.
 
     Returns:
         int: Euclidean distance between users.
@@ -77,14 +81,23 @@ def sample(num, low, high, distance):
 
         random_sample = random_sample.append({"user_one_id": user_one_id,
                                             "user_two_id": user_two_id,
+<<<<<<< HEAD:utilities/distance_validation.py
                                             "distance": dist},
+=======
+                                            "distance": dist },
+>>>>>>> tedi:distance_validation.py
                                             ignore_index=True)
 
     return random_sample
 
 
+<<<<<<< HEAD:utilities/distance_validation.py
 test_l2 = sample(10, 0, 10, l2_distance)
 test_l2.to_csv("../../data/test_distance_l2.csv", index=False)
 
 test_cosine = sample(10, 0, 10, cosine_distance)
 test_cosine.to_csv("../../data/test_distance_cosine.csv", index=False)
+=======
+test_data = sample(10, 0, 10, l2_distance)
+test_data.to_csv(path_or_buf="../../data/distance_test_data.csv", index=False)
+>>>>>>> tedi:distance_validation.py
