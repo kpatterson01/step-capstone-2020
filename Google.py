@@ -18,13 +18,13 @@ class Google:
     def __init__(self, googlers):
         """ Creates Google company.
 
-        Calls __create_company method which implements manager hierarchy tree based on the list of
+        Calls __create_company method that implements manager hierarchy tree based on the list of
         Googlers and their attributes.
 
         Args:
             googlers: A list of Googler objects.
         """
-        self.ceo = self.__create_company(googlers)
+        self.company = self.__create_company(googlers)
         self.num_googlers = len(googlers)
         self.googlers = googlers
 
@@ -37,8 +37,10 @@ class Google:
         Returns:
             googler: The Googler object attached with the googler_id.
         """
-        #TODO: Implement Googler Search function
-        return
+        googler = next((googler for googler in self.googlers if googler.id == googler_id), None)
+        if googler is not None:
+            return googler
+        raise ReferenceError("No Googler at Google with given id found")
 
     def distance(self, googler_one, googler_two):
         """ Returns the distance of two Googlers in the managerial hierarchy.
@@ -78,9 +80,18 @@ class Google:
 
         Args:
             googlers: An list of Googler objects.
-
         """
         #TODO: Implement function to create managerial hierarchy.
-        return
+
+        # Current implementation utilizes a dictionary to represent a pseudo company hierarchy.
+        # Every Googler is a key with its value being the Googler object that represents its manager.
+        company = {}
+        for googler in googlers:
+            # For every Googler, find their manager and map googler --> manager in dict
+            # NOTE: Believe this is implicitly O(n) making this algo O(n^2) :( if you're reading this guys, im using the thinker
+            manager = next((manager for manager in googlers if manager.id == googler.manager_id), None)
+            if manager is not None:
+                company[googler] = manager
+        return company
 
     #Add any required methods for the class

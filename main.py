@@ -29,15 +29,19 @@ with open('../data/sorted_attribute_table_fake.csv', 'r') as f:
         attributes["location"] = user[4]
         attributes["lowest_dir_id"] = user[5]
         attributes["job_family"] = user[6]
-        print(attributes)
         googler = Googler(attributes)
         googlers.append(googler)
 
 googlers = googlers[1:] #Drop labels row
-print(googlers[0].manager_id)
+print(googlers)
+
 
 # Create the Google company
+google = Google(googlers)
+print(google.company)
 
-# Sample N pairs of Googlers and calculate distance and usage similarity metrics for the pairs
+# Read in googler to resources data and attach list of resources accessed objects to every Googler
 
-# Output pairs and metrics in a csv
+# Sample N pairs of Googlers and calculate distance and usage similarity metrics for those pairs
+
+# Output pairs and respective metrics in a csv
