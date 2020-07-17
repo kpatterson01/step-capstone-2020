@@ -37,7 +37,7 @@ class Google:
         Returns:
             googler: The Googler object attached with the googler_id.
         """
-        googler = next((googler for googler in self.googlers if googler.id == googler_id), None)
+        googler = self.company.get(googler_id)
         if googler is not None:
             return googler
         raise ReferenceError("No Googler at Google with given id found")
@@ -55,8 +55,19 @@ class Google:
         Returns:
             distance: An integer representing their similarity or distance in the tree.
         """
-        #TODO: Implement function to determine distance between to Googlers.
-        return
+        if(googler_one == googler_two):
+            return 0
+        googler_one_managers = set()
+        googler_two_managers = set()
+        while(len(googler_one_managers.intersection(googler_two_managers)) == 0):
+            if(googler_one.manager_id != -1):
+                googler_one_managers.add(googler_one.manager_id)
+                googler_one = self.search(googler_one.manager_id)
+            if(googler_two.manager_id != -1):
+                googler_two_managers.add(googler_two.manager_id)
+                googler_two = self.search(googler_two.manager_id)
+
+        return max(len(googler_one_managers), len(googler_two_managers))
 
     def usage_similarity(self, googler_one, googler_two):
         """ Returns a usage similarity metric of two Googlers in the managerial hierarchy based
@@ -81,17 +92,9 @@ class Google:
         Args:
             googlers: An list of Googler objects.
         """
-        #TODO: Implement function to create managerial hierarchy.
-
-        # Current implementation utilizes a dictionary to represent a pseudo company hierarchy.
-        # Every Googler is a key with its value being the Googler object that represents its manager.
         company = {}
         for googler in googlers:
-            # For every Googler, find their manager and map googler --> manager in dict
-            # NOTE: Believe this is implicitly O(n) making this algo O(n^2) :( if you're reading this guys, im using the thinker
-            manager = next((manager for manager in googlers if manager.id == googler.manager_id), None)
-            if manager is not None:
-                company[googler] = manager
+            company[googler.id] = googler
         return company
 
     #Add any required methods for the class
