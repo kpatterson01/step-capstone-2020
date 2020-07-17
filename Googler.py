@@ -16,7 +16,7 @@ class Googler:
         location
         lowest_dir_id
         job_family
-        resources: A list of integers that represent a specific resource.
+        resources: A list of Resource objects that represent resources this Googler has accessed.
         reports: A list of Googler objects representing Googlers who report to this Googler object.
     """
 
@@ -37,8 +37,27 @@ class Googler:
         self.location = attributes.get("location")
         self.lowest_dir_id = attributes.get("lowest_dir_id")
         self.job_family = attributes.get("job_family")
-        self.resources = []
+        self.resources = [] #List of Resource objects from resource.py module
         self.reports = []
+
+    def __hash__(self):
+        """ Hash function for Googler object """
+        return hash(self.id)
+
+    def __eq__(self, googler):
+        """Compare if two Googlers are the same person.
+
+        Two Googlers are only equal if their id's are equal to each other.
+        """
+        if isinstance(googler, type(self)):
+            return self.id == googler.id
+        return False
+
+    def __str__(self):
+        return f'{self.id}'
+
+    def __repr__(self):
+        return f'{self.id}'
 
     def add_report(self, googler):
         """ Adds the googler to list of reports.

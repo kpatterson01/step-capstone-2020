@@ -18,13 +18,13 @@ class Google:
     def __init__(self, googlers):
         """ Creates Google company.
 
-        Calls __create_company method which implements manager hierarchy tree based on the list of
+        Calls __create_company method that implements manager hierarchy tree based on the list of
         Googlers and their attributes.
 
         Args:
             googlers: A list of Googler objects.
         """
-        self.ceo = self.__create_company(googlers)
+        self.company = self.__create_company(googlers)
         self.num_googlers = len(googlers)
         self.googlers = googlers
 
@@ -37,8 +37,10 @@ class Google:
         Returns:
             googler: The Googler object attached with the googler_id.
         """
-        #TODO: Implement Googler Search function
-        return
+        googler = self.company.get(googler_id)
+        if googler is not None:
+            return googler
+        raise ReferenceError("No Googler at Google with given id found")
 
     def distance(self, googler_one, googler_two):
         """ Returns the distance of two Googlers in the managerial hierarchy.
@@ -53,8 +55,19 @@ class Google:
         Returns:
             distance: An integer representing their similarity or distance in the tree.
         """
-        #TODO: Implement function to determine distance between to Googlers.
-        return
+        if(googler_one == googler_two):
+            return 0
+        googler_one_managers = set()
+        googler_two_managers = set()
+        while(len(googler_one_managers.intersection(googler_two_managers)) == 0):
+            if(googler_one.manager_id != -1):
+                googler_one_managers.add(googler_one.manager_id)
+                googler_one = self.search(googler_one.manager_id)
+            if(googler_two.manager_id != -1):
+                googler_two_managers.add(googler_two.manager_id)
+                googler_two = self.search(googler_two.manager_id)
+
+        return max(len(googler_one_managers), len(googler_two_managers))
 
     def usage_similarity(self, googler_one, googler_two):
         """ Returns a usage similarity metric of two Googlers in the managerial hierarchy based
@@ -78,9 +91,10 @@ class Google:
 
         Args:
             googlers: An list of Googler objects.
-
         """
-        #TODO: Implement function to create managerial hierarchy.
-        return
+        company = {}
+        for googler in googlers:
+            company[googler.id] = googler
+        return company
 
     #Add any required methods for the class
