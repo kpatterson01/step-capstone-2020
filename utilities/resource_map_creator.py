@@ -3,7 +3,7 @@
 
 import pandas as pd
 import os.path
-import timeit 
+import timeit
 import pickle
 
 class Resource:
@@ -23,8 +23,8 @@ class Resource:
     # See en.wikipedia.org/wiki/Pairing_function for more information
     def __hash__(self):
         return (((self.attr_1+self.attr_2+1)*(self.attr_1+self.attr_2)//2)
-                +self.attr_2) 
-        
+                +self.attr_2)
+
 
     @staticmethod
     def overlap_ratio(set1, set2):
@@ -35,7 +35,7 @@ class Resource:
 
 if __name__ == "__main__":
 
-    input_path = os.path.expanduser("~/data/sorted_user_resources.csv")
+    input_path = os.path.expanduser("../../data/sorted_user_resources.csv")
     reader = pd.read_csv(input_path, chunksize = 100000)
     resource_users = {}
 
@@ -52,6 +52,5 @@ if __name__ == "__main__":
     end = timeit.default_timer()
     print("Time: ", end - start)
 
-    with open(os.path.expanduser("~/data/resource_map.pkl"),"wb") as f:
+    with open(os.path.expanduser("../../data/resource_map.pkl"),"wb") as f:
         pickle.dump(resource_users,f)
-
