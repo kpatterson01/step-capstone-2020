@@ -1,5 +1,5 @@
 # Created by Kayla Patterson 07/16/2020
-# This file maps each googler to their perspective
+# This file maps each user to their perspective
 # resources and exports it as a pickle file 
 
 import pandas as pd 
@@ -7,33 +7,33 @@ import os.path
 import pickle 
 
 # importing Resource class 
-from resource_map_creator import Resource 
+from resource_map_creator import Resource  
 
 if __name__ == "__main__":
    
     file_path = os.path.expanduser("~/data/sorted_user_resources.csv") 
     read_file = pd.read_csv(file_path, chunksize = 10000) 
-    googler_resources = {} 
+    user_resources = {} 
     
 
-    # Reads csv file and use a dictionary to map googlers id 
+    # Reads csv file and use a dictionary to map user ids 
     # to a set of their resources 
     for chunk in read_file:
         for index, row in chunk.iterrows():
-            googler_id = row['user_id']
+            user_id = row['user_id']
             resource = Resource(row['resource_attr_1'], row['resource_attr_2']) 
      
-            # If googler_id is in dictionary add current resource 
+            # If user_id is in dictionary add current resource 
             # else create new dictionary key and map it to a new set of resources 
-            if googler_id in googler_resources:
-                googler_resources[googler_id].add(resource)  
+            if user_id in user_resources:
+                user_resources[user_id].add(resource)  
             else:
-                googler_resources[googler_id] = set()
-                googler_resources[googler_id].add(resource)
+                user_resources[user_id] = set()
+                user_resources[user_id].add(resource)
                 
 
-    with open(os.path.expanduser("~/data/googler_resouce_map.pkl"), "wb") as f:
-        pickle.dump(googler_resources,f)
+    with open(os.path.expanduser("~/data/user_resouce_map.pkl"), "wb") as f:
+        pickle.dump(user_resources,f)
         
 
 
