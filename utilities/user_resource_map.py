@@ -1,5 +1,5 @@
 # Created by Kayla Patterson 07/16/2020
-# This file maps each googler to their perspective
+# This file maps each user to their perspective
 # resources and exports it as a pickle file 
 
 import pandas as pd 
