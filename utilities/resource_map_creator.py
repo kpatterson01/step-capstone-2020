@@ -35,7 +35,7 @@ class Resource:
 
 if __name__ == "__main__":
 
-    input_path = os.path.expanduser("../../data/sorted_user_resources.csv")
+    input_path = os.path.expanduser("../../data/sorted_usage_table.csv")
     reader = pd.read_csv(input_path, chunksize = 100000)
     resource_users = {}
 
@@ -52,5 +52,5 @@ if __name__ == "__main__":
     end = timeit.default_timer()
     print("Time: ", end - start)
 
-    with open(os.path.expanduser("../../data/resource_map.pkl"),"wb") as f:
+    with open(os.path.expanduser("../../data/resource_employee_map.pkl"),"wb") as f:
         pickle.dump(resource_users,f)
