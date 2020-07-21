@@ -1,3 +1,4 @@
+
 from csv_sort import external_sort
 import pandas as pd
 import os
@@ -16,14 +17,14 @@ class TestExternalSortAccuracy(unittest.TestCase):
         internal_sorted.reset_index(drop=True,inplace=True)
 
         # make sure that we have the same
-        # (types are not preserved when writting to csv) 
+        # (types are not preserved when writting to csv)
         internal_sorted['user_id'] = pd.to_numeric(internal_sorted['user_id'])
         external_sorted['user_id'] = pd.to_numeric(external_sorted['user_id'])
-        
+
         #we onlt care about the user_ids so we are going to just compare those
         internal_list = internal_sorted['user_id'].tolist()
         external_list = external_sorted['user_id'].tolist()
-        
+
         same = True
         for i,e in zip(internal_list,external_list):
             if i != e:
@@ -34,3 +35,6 @@ class TestExternalSortAccuracy(unittest.TestCase):
 
         #clean up the file we wrote
         os.remove(test_path)
+
+if __name__ == '__main__':
+    unittest.main()

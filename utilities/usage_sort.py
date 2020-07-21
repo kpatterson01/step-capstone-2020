@@ -51,7 +51,7 @@ def write_header(header, out_path):
 # repeat until all data is in sorted chunks
 # read small amount from each chunk
 # merge these mini-chunks
-# In particular, I merge these mini-chunks with a min-heap. I load the first 
+# In particular, I merge these mini-chunks with a min-heap. I load the first
 # element from each chunk into the heap then I pop the top of the minheap and
 # add another item from the chunk that the item which was popped origninated from
 # complexity: nlog(n), the sorting part is nlog(n) and the merging part is
@@ -75,7 +75,7 @@ def external_sort(dataframe,output_path):
         f = open('tmp%d.csv'%i)
         reader = csv.reader(f,delimiter=',')
         readers.append(reader)
-        header = next(reader) #skip the header 
+        header = next(reader) #skip the header
         row = next(reader)
         row_obj = Row(row[1],row[2],row[3],row[4],row[5],row[6],i)
         heapq.heappush(heap,row_obj)
@@ -87,7 +87,7 @@ def external_sort(dataframe,output_path):
     out_list = []
 
     # while the heap isn't empty, write the smallest row (sorted by user_id)
-    # to the out file. Call this row r. 
+    # to the out file. Call this row r.
     # if the chunk is not empty, add a row from the chunk r originated from
     # to the minheap
     while(len(heap) > 0):
