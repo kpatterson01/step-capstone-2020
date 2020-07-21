@@ -17,9 +17,8 @@ class Employee:
         lowest_dir_id
         job_family
         resources: A list of Resource objects that represent resources this employee has accessed.
-        reports: A list of employee objects representing employees who report to this employee object.
+        reports: A list of Employee objects representing employees who report to this employee object.
     """
-
     def __init__(self, attributes):
         """Initializes employee object based on anonymized attributes from go/who.
 
@@ -30,13 +29,13 @@ class Employee:
                             job_family: 10 --> Intern-Technical
                             ...
         """
-        self.id = attributes.get("id")
-        self.department = attributes.get("department")
-        self.cost_center = attributes.get("cost_center")
-        self.manager_id = attributes.get("manager_id")
-        self.location = attributes.get("location")
-        self.lowest_dir_id = attributes.get("lowest_dir_id")
-        self.job_family = attributes.get("job_family")
+        self.id = int(float(attributes.get("id")))
+        self.department = int(float(attributes.get("department")))
+        self.cost_center = int(float(attributes.get("cost_center")))
+        self.manager_id = int(float(attributes.get("manager_id")))
+        self.location = int(float(attributes.get("location")))
+        self.lowest_dir_id = int(float(attributes.get("lowest_dir_id")))
+        self.job_family = int(float(attributes.get("job_family")))
         self.resources = [] #List of Resource objects from resource.py module
         self.reports = []
 
@@ -54,10 +53,10 @@ class Employee:
         return False
 
     def __str__(self):
-        return f'{self.id}'
+        return 'Employee: '+ f'{self.id}'
 
     def __repr__(self):
-        return f'{self.id}'
+        return 'Employee: '+ f'{self.id}'
 
     def add_report(self, employee):
         """ Adds the employee to list of reports.
@@ -89,5 +88,3 @@ class Employee:
         attr.append(self.lowest_dir_id)
         attr.append(self.job_family)
         return attr
-
-    #Add any required methods for the class

@@ -17,6 +17,12 @@ class Resource:
         self.attr_one = int(attr_one)
         self.attr_two = int(attr_two)
 
+    def __str__(self):
+        return '(Resource: ' + f'{self.attr_one}' + ', ' + f'{self.attr_two}' + ')'
+
+    def __repr__(self):
+        return '(Resource: ' + f'{self.attr_one}' + ', ' + f'{self.attr_two}' + ')'
+
     def __eq__(self, resource):
         """ Comparing if two resources are the same.
 

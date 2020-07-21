@@ -1,27 +1,33 @@
 
-# **FILENAME SHOULD BE RENAMED**
 # File to output data for visualizing regression of employees attribute similarity vs usage similarity.
 
 import csv
+from random import randint
+import pickle
+
 import numpy as np
 import pandas as pd
-from random import randint
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # Custom classes to represent an Employee, a Company, and a Resource
 from employee import Employee
 from company import Company
-from utilities.resource import Resource
+from resource import Resource
+
 
 # Read in employee attributes table and sort by manager id
-# employee_attributes = pd.read_csv("../data/user.csv") #NOTE: Currently a fake dataset
-# employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
-# employee_attributes.to_csv("../data/sorted_user.csv", index=False)
-#
+employee_attributes = pd.read_csv("../data/user.csv") #NOTE: Currently a fake dataset
+employee_attributes = employee_attributes.fillna(-1) # Replace all None values with -1
+employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
+employee_attributes.to_csv("../data/sorted_user.csv", index=False)
+
 
 # Read in lines of employee data and create list of employee objects
 employees = []
-with open('../data/sorted_user.csv', 'r') as f:
+with open('../data/sorted_attribute_table.csv', 'r') as f:
     reader = csv.reader(f)
+    next(reader)
     for user in reader:
         attributes = {}
         attributes["id"] = user[0]
@@ -34,18 +40,25 @@ with open('../data/sorted_user.csv', 'r') as f:
         employee = Employee(attributes)
         employees.append(employee)
 
-employees = employees[1:] #Drop labels row
-
 # Create the company
 company = Company(employees)
 
-# Go through employees and add all of their reports
+# For every employee, add them to their mangers list of reports
+for employee in company.employees:
+    if(company.company.get(employee.manager_id) is not None):
+        manager = company.search(employee.manager_id)
+        manager.add_report(employee)
 
 # Read in employee to resources data and attach list of resources accessed objects to every employee
+employee_resources = pickle.load(open('../data/employee_resource_map.pkl', 'rb'))
+for employee in company.employees:
+    if(employee_resources.get(employee.id) is not None):
+        for resource in employee_resources.get(employee.id):
+            employee.add_resource(resource)
 
 # Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
 
-# sample function from utilities/distance_validation.py
+# (sample function from utilities/distance_validation.py)
 def sample(num, low, high, company):
     """Creates a dataframe that contains sample user pairs and their euclidean distances from.
 
@@ -64,15 +77,19 @@ def sample(num, low, high, company):
         employee_one = company.search(randint(low, high))
         employee_two = company.search(randint(low, high))
         dist = company.distance(employee_one, employee_two)
+        usage_similarity = company.usage_similarity(employee_one, employee_two)
         random_sample = random_sample.append({"user_one_id": employee_one.id,
                                             "user_two_id": employee_two.id,
                                             "distance": dist,
-                                            "usage_similarity": None },
+                                            "usage_similarity": usage_similarity},
                                             ignore_index=True)
 
     return random_sample
 
-print(sample(50, 0, 268027, company))
-
-
 # Output pairs and respective metrics in a csv
+metric_data = sample(50, 0, 50, company)
+metric_data = pd.to_csv("../data/metric_data.csv")
+
+# Create regression plot of Distance vs. Usage Similarity
+sns.set(color_codes=True)
+sns.regplot(x="Distance", y="Usage Similarity", data=metric_data)

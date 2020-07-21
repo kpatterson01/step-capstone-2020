@@ -1,5 +1,5 @@
 
-# Defines a company class that encapsulates managerial hierarchy tree
+# Defines a Company class that encapsulates managerial hierarchy tree
 # and provides several functions to manipulate and analyze the organizational hierarchy.
 
 class Company:
@@ -59,17 +59,16 @@ class Company:
             return 0
         employee_one_managers = set()
         employee_two_managers = set()
+        if(employee_one.manager_id == -1): employee_one_managers.add(employee_one.id)
+        if(employee_two.manager_id == -1): employee_two_manaers.add(employee_two.id)
         while(len(employee_one_managers.intersection(employee_two_managers)) == 0):
-            if((employee_one.manager_id is None) and (self.search(employee_one.id) not in employee_one_managers)):
+            employee_one_managers.add(employee_one.manager_id)
+            if(employee_one.manager_id != -1):
                 employee_one_managers.add(employee_one.manager_id)
-            else:
-                employee_one_managers.add(employee_one.manager_id)
-                employee_one = self.search(int(float(employee_one.manager_id)))
-            if((employee_two.manager_id is None) and (self.search(employee_two.id) not in employee_two_managers)):
+                employee_one = self.search(employee_one.manager_id)
+            if(employee_two.manager_id != -1):
                 employee_two_managers.add(employee_two.manager_id)
-            else:
-                employee_two_managers.add(employee_two.manager_id)
-                employee_two = self.search(int(float(employee_two.manager_id)))
+                employee_two = self.search(employee_two.manager_id)
 
         return max(len(employee_one_managers), len(employee_two_managers))
 
@@ -85,20 +84,29 @@ class Company:
             employee_two: A employee object.
 
         Returns:
-            metric: An integer representing their usage similarity.
+            metric: An float representing their usage similarity.
         """
-        #TODO: Implement function to determine distance between employee.
-        return smth
+        employee_one_resources = set(employee_one.resources)
+        employee_two_resources = set(employee_two.resources)
+        num_in_common = len(employee_one_resources.intersection(employee_two_resources))
+        num_total = len(employee_one_resources) + len(employee_two_resources) - num_in_common
+        if(num_total == 0 or num_in_common == 0): return 0
+        return num_in_common/num_total
 
     def __create_company(self, employees):
         """ Creates managerial hierarchy tree of Google company.
 
         Args:
             employees: An list of employee objects.
+
+        Returns:
+            company: A dictionary with <employee.id:Employee objects>
         """
         company = {}
         for employee in employees:
-            company[int(employee.id)] = employee
+            company[employee.id] = employee
         return company
 
-    #Add any required methods for the class
+    def __max_depth(self, employees):
+        # TODO: Create function that finds max depth of the company
+        return
