@@ -4,6 +4,8 @@ from employee import Employee
 from utilities.resource_map_creator import Resource
 import csv
 
+# gets provisioning metrics for a given resource given a rule
+# rule should be a function that takes a user and returns a boolean (examples below)
 def get_metrics(resource, rule, resource_map, company):
     actual_users = resource_map[resource]
     predicted_users = set()
@@ -14,6 +16,8 @@ def get_metrics(resource, rule, resource_map, company):
     metrics = calculate_metrics(actual_users, predicted_users)
     return metrics
 
+# calculates recall and precision based on actual and predicted sets
+# returns a tuple: precision, recall
 def calculate_metrics(actual, predicted):
     true_positive = actual.intersection(predicted)
     false_positive = predicted.difference(actual)
@@ -75,13 +79,14 @@ def load_company():
 
     return company
 
+
 def example_rule(user):
     return user.department == 13
+
 def another_example_rule(user):
     return user.id == 9
 
 if __name__ == "__main__":
-
     resource_map = load_resource_map()
     company = load_company()
 
