@@ -1,16 +1,15 @@
+# This file contains some useful functions for metrics regarding provisioning
 import pickle
 from employee import Employee
 from utilities.resource_map_creator import Resource
 import csv
 
-def get_metrics(resource, rule):
-    resource_map = load_resource_map()
+def get_metrics(resource, rule, resource_map, company):
     actual_users = resource_map[resource]
     predicted_users = set()
-    company = load_company()
     for user in company:
         if rule(user):
-            predicted_users.add(user)
+            predicted_users.add(user.id)
     print("actual: %d , predicted: %d"%(len(actual_users),len(predicted_users)))
     metrics = calculate_metrics(actual_users, predicted_users)
     return metrics
@@ -78,8 +77,17 @@ def load_company():
 
 def example_rule(user):
     return user.department == 13
+def another_example_rule(user):
+    return user.id == 9
 
 if __name__ == "__main__":
+
+    resource_map = load_resource_map()
+    company = load_company()
+
     example_resource = Resource(411231,2072)
-    metrics = get_metrics(example_resource, example_rule)
+    metrics = get_metrics(example_resource, example_rule, resource_map, company)
+    print(metrics)
+
+    metrics = get_metrics(example_resource, another_example_rule, resource_map, company)
     print(metrics)
