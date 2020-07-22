@@ -113,9 +113,10 @@ class Company:
         max_depth = 0
         for employee in employees:
             employee_managers = set()
-            employee_manager = self.company.get(employee.manager_id)
-            while((employee_manager is not None) and (employee_manager.manager_id != -1)):
-                employee_managers.add(employee_manager)
-                employee_manager = self.search(employee_manager.manager_id)
+            if(employee.manager_id != -1):
+                employee_manager = self.company.get(employee.manager_id)
+                while(employee_manager is not None):
+                    employee_managers.add(employee_manager)
+                    employee_manager = self.company.get(employee_manager.manager_id)
             if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
         return max_depth

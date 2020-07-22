@@ -173,22 +173,22 @@ class TestMaxDepth(unittest.TestCase):
                         Employee({   "id": 9, "department": 10, "cost_center":10, "manager_id":8,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 12, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 18, "department": 10, "cost_center":10, "manager_id":9,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 4, "department": 10, "cost_center":10, "manager_id":18,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
         self.company = Company(self.employees)
-        # Company:
+        # Company One:
         #             0
         #     1       2       8
         #           11 14    9 12
-        # distance(9, 12): 1
-        # distance(11, 12): 2
-        # distance(1, 9): 2
-        # distance(1, 0): 1
-        # distance(9, 9): 0
-
+        #                   18
+        #                     4
     def test_max_depth(self):
-        #Test max depth of this company is 3
+        #Test max depth of this company is 4
         depth = self.company.depth
-        self.assertEqual(3, depth)
+        self.assertEqual(4, depth)
 
 
 if __name__ == '__main__':
