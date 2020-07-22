@@ -25,6 +25,7 @@ class Company:
             employees: A list of employee objects.
         """
         self.company = self.__create_company(employees)
+        self.depth = self.__max_depth(employees)
         self.num_employees = len(employees)
         self.employees = employees
 
@@ -97,7 +98,7 @@ class Company:
         """ Creates managerial hierarchy tree of Google company.
 
         Args:
-            employees: An list of employee objects.
+            employees: A list of employee objects.
 
         Returns:
             company: A dictionary with <employee.id:Employee objects>
@@ -108,5 +109,13 @@ class Company:
         return company
 
     def __max_depth(self, employees):
-        # TODO: Create function that finds max depth of the company
-        return
+        """ Calculates max depth of company aka distance from lowest employee to CEO. """
+        max_depth = 0
+        for employee in employees:
+            employee_managers = set()
+            employee_manager = self.company.get(employee.manager_id)
+            while((employee_manager is not None) and (employee_manager.manager_id != -1)):
+                employee_managers.add(employee_manager)
+                employee_manager = self.search(employee_manager.manager_id)
+            if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
+        return max_depth

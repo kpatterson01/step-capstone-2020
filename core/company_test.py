@@ -155,5 +155,41 @@ class TestUsageSimilarity(unittest.TestCase):
         usage_similarity = self.company.usage_similarity(employee_one, employee_two)
         self.assertAlmostEqual(0, usage_similarity)
 
+class TestMaxDepth(unittest.TestCase):
+
+    def setUp(self):
+        self.employees = [Employee({  "id": 0, "department": 10, "cost_center":10, "manager_id": -1,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 1, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 2, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 8, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 14, "department": 10, "cost_center":10, "manager_id":2,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 11, "department": 10, "cost_center":10, "manager_id":2,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 9, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 12, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10})]
+        self.company = Company(self.employees)
+        # Company:
+        #             0
+        #     1       2       8
+        #           11 14    9 12
+        # distance(9, 12): 1
+        # distance(11, 12): 2
+        # distance(1, 9): 2
+        # distance(1, 0): 1
+        # distance(9, 9): 0
+
+    def test_max_depth(self):
+        #Test max depth of this company is 3
+        depth = self.company.depth
+        self.assertEqual(3, depth)
+
+
 if __name__ == '__main__':
     unittest.main()
