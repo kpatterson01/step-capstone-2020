@@ -1,10 +1,10 @@
 
-# Defines a Googler class encapsulating their information on go/who.
+# Defines a employee class encapsulating their information.
 
-class Googler:
-    """ This class encapsulates a Googlers information.
+class Employee:
+    """ This class encapsulates a employees information.
 
-    The class takes in attributes that represent information specific to every Googler working at
+    The class takes in attributes that represent information specific to every employee working at
     Google that can be found on their go/who. These attributes are anonymized integers
     that represent each piece of information.
 
@@ -16,12 +16,12 @@ class Googler:
         location
         lowest_dir_id
         job_family
-        resources: A list of Resource objects that represent resources this Googler has accessed.
-        reports: A list of Googler objects representing Googlers who report to this Googler object.
+        resources: A list of Resource objects that represent resources this employee has accessed.
+        reports: A list of employee objects representing employees who report to this employee object.
     """
 
     def __init__(self, attributes):
-        """Initializes Googler object based on anonymized attributes from go/who.
+        """Initializes employee object based on anonymized attributes from go/who.
 
         Args:
             attributes: An JSON object of mapping attributes to integers that represent the attributes.
@@ -41,16 +41,16 @@ class Googler:
         self.reports = []
 
     def __hash__(self):
-        """ Hash function for Googler object """
+        """ Hash function for employee object """
         return hash(self.id)
 
-    def __eq__(self, googler):
-        """Compare if two Googlers are the same person.
+    def __eq__(self, employee):
+        """Compare if two employees are the same person.
 
-        Two Googlers are only equal if their id's are equal to each other.
+        Two employees are only equal if their id's are equal to each other.
         """
-        if isinstance(googler, type(self)):
-            return self.id == googler.id
+        if isinstance(employee, type(self)):
+            return self.id == employee.id
         return False
 
     def __str__(self):
@@ -59,13 +59,13 @@ class Googler:
     def __repr__(self):
         return f'{self.id}'
 
-    def add_report(self, googler):
-        """ Adds the googler to list of reports.
+    def add_report(self, employee):
+        """ Adds the employee to list of reports.
 
         Args:
-            googler: A Googler object.
+            employee: A employee object.
         """
-        self.reports.append(googler)
+        self.reports.append(employee)
 
     def add_resource(self, resource):
         """ Adds the resource to list of resources.

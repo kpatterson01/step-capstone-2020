@@ -1,0 +1,78 @@
+
+# **FILENAME SHOULD BE RENAMED**
+# File to output data for visualizing regression of employees attribute similarity vs usage similarity.
+
+import csv
+import numpy as np
+import pandas as pd
+from random import randint
+
+# Custom classes to represent an Employee, a Company, and a Resource
+from employee import Employee
+from company import Company
+from utilities.resource import Resource
+
+# Read in employee attributes table and sort by manager id
+# employee_attributes = pd.read_csv("../data/user.csv") #NOTE: Currently a fake dataset
+# employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
+# employee_attributes.to_csv("../data/sorted_user.csv", index=False)
+#
+
+# Read in lines of employee data and create list of employee objects
+employees = []
+with open('../data/sorted_user.csv', 'r') as f:
+    reader = csv.reader(f)
+    for user in reader:
+        attributes = {}
+        attributes["id"] = user[0]
+        attributes["department"] = user[1]
+        attributes["cost_center"] = user[2]
+        attributes["manager_id"] = user[3]
+        attributes["location"] = user[4]
+        attributes["lowest_dir_id"] = user[5]
+        attributes["job_family"] = user[6]
+        employee = Employee(attributes)
+        employees.append(employee)
+
+employees = employees[1:] #Drop labels row
+
+# Create the company
+company = Company(employees)
+
+# Go through employees and add all of their reports
+
+# Read in employee to resources data and attach list of resources accessed objects to every employee
+
+# Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
+
+# sample function from utilities/distance_validation.py
+def sample(num, low, high, company):
+    """Creates a dataframe that contains sample user pairs and their euclidean distances from.
+
+    The range for low - high is 0 - 268027 based on number of entries in user.csv.
+    Args:
+        num(int): Number of pairs to sample.
+        low(int): Lower bound of range of user ids. Ex: To sample user_id's in range from 0-50, low = 0, high = 50.
+        high(int): Upper bound of range of user ids.
+        company: Company with employees.
+
+    Returns:
+        random_sample(DataFrame): A table with user pairs and their l2 distances.
+    """
+    random_sample = pd.DataFrame(columns = ["user_one_id", "user_two_id", "distance", "usage_similarity"])
+    for i in range(num):
+        employee_one = company.search(randint(low, high))
+        employee_two = company.search(randint(low, high))
+        dist = company.distance(employee_one, employee_two)
+        random_sample = random_sample.append({"user_one_id": employee_one.id,
+                                            "user_two_id": employee_two.id,
+                                            "distance": dist,
+                                            "usage_similarity": None },
+                                            ignore_index=True)
+
+    return random_sample
+
+print(sample(50, 0, 268027, company))
+
+
+# Output pairs and respective metrics in a csv

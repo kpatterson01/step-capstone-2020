@@ -55,13 +55,13 @@ def cosine_distance(user_one, user_two):
 
 #Calculate distances between several pairs of randomly sampled users
 def sample(num, low, high, distance):
-    """Creates a dataframe that contains sample user pairs and their euclidean distances from.
+    """Creates a dataframe that contains sample user pairs and their distances from each other.
 
     Args:
         num(int): Number of pairs to sample.
         low(int): Lower bound of range of user ids. Ex: To sample user_id's in range from 0-50, low = 0, high = 50.
         high(int): Upper bound of range of user ids.
-        distance(function): A function
+        distance(function): A function that calculates some distance metric.
 
     Returns:
         random_sample(DataFrame): A table with user pairs and their l2 distances.
