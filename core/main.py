@@ -90,5 +90,5 @@ def sample(num, low, high, company):
     return random_sample
 
 # Output pairs and respective metrics in a csv
-metric_data = sample(50, 0, 50, company)
+metric_data = sample(500, 0, 50, company)
 metric_data = pd.to_csv("../../data/metric_data.csv")

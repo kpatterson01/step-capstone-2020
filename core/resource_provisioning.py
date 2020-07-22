@@ -1,7 +1,7 @@
 # This file contains some useful functions for metrics regarding provisioning
 import pickle
 from employee import Employee
-from utilities.resource_map_creator import Resource
+from resource import Resource
 import csv
 
 # gets provisioning metrics for a given resource given a rule
@@ -74,7 +74,7 @@ def load_company():
                 attributes["job_family"] = int(user[6])
             employee = Employee(attributes)
             company.add(employee)
-    
+
     print("Company size: %d" % len(company))
 
     return company
