@@ -83,7 +83,7 @@ class Company:
 
     def __to_dict(self, employee):
         """ Recursive function to create dictonary hierarchy """
-        if(len(employee.reports) == 0): return {"Employee": employee.id, "Reports":[]}
+        if(len(employee.reports) == 0): return { "Employee": employee.id }
 
         hierarchy = {"Employee": employee.id, "Reports":[]}
         for report in employee.reports:

@@ -26,15 +26,15 @@ class TestManagerialHierarchy(unittest.TestCase):
         #     1       2       8
         #                   7
 
-        self.actual_hierarchy = { "Employee": -100, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1, "Reports":[]},
-                                                                                {"Employee": 2, "Reports":[] },
-                                                                                {"Employee": 8, "Reports":[ {"Employee": 7, "Reports":[] }]}
+        self.actual_hierarchy = { "Employee": -100, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1},
+                                                                                {"Employee": 2 },
+                                                                                {"Employee": 8, "Reports":[ {"Employee": 7 }]}
                                                                         ]}
                                                                 ]}
     def test_hierarchy(self):
         # Test that the dictionary hierarchy is created correctly
         company_hierarchy = self.company.hierarchy
-        with open('../../data/test_hierachy.json', 'w') as outfile:
+        with open('../../data/test_hierarchy.json', 'w') as outfile:
             json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
         self.assertEqual(self.actual_hierarchy, company_hierarchy)
 
