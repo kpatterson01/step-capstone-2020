@@ -2,6 +2,9 @@
 # Defines a Company class that encapsulates managerial hierarchy tree
 # and provides several functions to manipulate and analyze the organizational hierarchy.
 
+import json
+from employee import Employee
+
 class Company:
     """ This class simulates the managerial hierarchy tree of a company.
 
@@ -18,15 +21,88 @@ class Company:
     def __init__(self, employees):
         """ Creates Google company.
 
-        Calls __create_company method that implements manager hierarchy tree based on the list of
+        Calls __create_directory method that implements manager hierarchy tree based on the list of
         employees and their attributes.
 
         Args:
             employees: A list of employee objects.
         """
-        self.company = self.__create_company(employees)
+        self.company = self.__create_directory(employees)
+        self.hierarchy = self.__create_hierarchy(employees)
+        self.depth = self.__max_depth(employees)
         self.num_employees = len(employees)
         self.employees = employees
+
+    def __str__(self):
+        return json.dumps(self.hierarchy, indent=2)
+
+    def __create_directory(self, employees):
+        """ Creates directory Google company.
+
+        Args:
+            employees: A list of employee objects.
+
+        Returns:
+            company: A dictionary with <employee.id:Employee objects>
+        """
+        company = {}
+        for employee in employees:
+            company[employee.id] = employee
+
+        for employee in employees:
+            if(company.get(employee.manager_id) is not None):
+                manager = company.get(employee.manager_id)
+                manager.add_report(employee)
+
+        return company
+
+    def __create_hierarchy(self, employees):
+        """ Creates managerial hierarchy tree of Google company.
+
+        Args:
+            employees: A list of employee objects.
+
+        Returns:
+            hierarchy: A dictionary representing managerial hierarchy.
+        """
+        top_managers = []
+        for employee in employees:
+            if(employee.manager_id == -1):
+                top_managers.append(employee)
+
+        dummy_ceo = Employee({"id":-100,
+                            "department":-100,
+                            "cost_center":-100,
+                            "manager_id":-100,
+                            "location":-100,
+                            "lowest_dir_id":-100,
+                            "job_family":-100 })
+        dummy_ceo.reports = top_managers
+
+        return self.__to_dict(dummy_ceo)
+
+    def __to_dict(self, employee):
+        """ Recursive function to create dictonary hierarchy """
+        if(len(employee.reports) == 0): return { "Employee": employee.id }
+
+        hierarchy = {"Employee": employee.id, "Reports":[]}
+        for report in employee.reports:
+            hierarchy.get("Reports").append(self.__to_dict(report))
+
+        return hierarchy
+
+    def __max_depth(self, employees):
+        """ Calculates max depth of company aka distance from lowest employee to CEO. """
+        max_depth = 0
+        for employee in employees:
+            employee_managers = set()
+            if(employee.manager_id != -1):
+                employee_manager = self.company.get(employee.manager_id)
+                while(employee_manager is not None):
+                    employee_managers.add(employee_manager)
+                    employee_manager = self.company.get(employee_manager.manager_id)
+            if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
+        return max_depth
 
     def search(self, employee_id):
         """ Searches for and returns the employee object given their id.
@@ -92,21 +168,3 @@ class Company:
         num_total = len(employee_one_resources) + len(employee_two_resources) - num_in_common
         if(num_total == 0 or num_in_common == 0): return 0
         return num_in_common/num_total
-
-    def __create_company(self, employees):
-        """ Creates managerial hierarchy tree of Google company.
-
-        Args:
-            employees: An list of employee objects.
-
-        Returns:
-            company: A dictionary with <employee.id:Employee objects>
-        """
-        company = {}
-        for employee in employees:
-            company[employee.id] = employee
-        return company
-
-    def __max_depth(self, employees):
-        # TODO: Create function that finds max depth of the company
-        return
