@@ -91,7 +91,7 @@ class Company:
 
         return hierarchy
 
-    def __max_depth(self, employees):
+    def __max_depth(self, employees): #Can be improved using a DFS with hierarchy
         """ Calculates max depth of company aka distance from lowest employee to CEO. """
         max_depth = 0
         for employee in employees:
