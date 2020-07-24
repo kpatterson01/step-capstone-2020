@@ -18,7 +18,7 @@ if __name__ == "__main__":
     # to a set of their resources
     for chunk in read_file:
         for index, row in chunk.iterrows():
-            employee_id = int(row['user_id'])
+            employee_id = int(row['anon_person_id'])
             resource = (int(row['resource_attr_1']), int(row['resource_attr_2']))
 
             # If employee_id is in dictionary add current resource
