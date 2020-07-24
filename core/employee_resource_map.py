@@ -4,13 +4,13 @@
 
 import pandas as pd
 import os.path
-import pickle
+import json
 
 from resource import Resource
 
 if __name__ == "__main__":
 
-    file_path = os.path.expanduser("../data/sorted_usage_table.csv")
+    file_path = os.path.expanduser("../../data/user-resource-2009.csv")
     read_file = pd.read_csv(file_path, chunksize = 10000)
     employee_resources = {}
 
@@ -19,16 +19,16 @@ if __name__ == "__main__":
     for chunk in read_file:
         for index, row in chunk.iterrows():
             employee_id = int(row['user_id'])
-            resource = Resource(row['resource_attr_1'], row['resource_attr_2'])
+            resource = (int(row['resource_attr_1']), int(row['resource_attr_2']))
 
             # If employee_id is in dictionary add current resource
             # else create new dictionary key and map it to a new set of resources
             if employee_id in employee_resources:
-                employee_resources[employee_id].add(resource)
+                employee_resources[employee_id].append(resource)
             else:
-                employee_resources[employee_id] = set()
-                employee_resources[employee_id].add(resource)
+                employee_resources[employee_id] = list()
+                employee_resources[employee_id].append(resource)
 
 
-    with open(os.path.expanduser("../data/employee_resource_map.pkl"), "wb") as f:
-        pickle.dump(employee_resources,f)
+    with open(os.path.expanduser("../../data/employee_resource_map.json"), "w") as f:
+        json.dump(employee_resources, f)
