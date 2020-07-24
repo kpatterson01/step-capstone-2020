@@ -18,7 +18,7 @@ from resource import Resource
 
 
 # Read in employee attributes table and sort by manager id
-employee_attributes = pd.read_csv("../../data/user.csv") #NOTE: Currently a fake dataset
+employee_attributes = pd.read_csv("../../data/olddata/user.csv") #NOTE: Currently a fake dataset
 employee_attributes = employee_attributes.fillna(-1) # Replace all None values with -1
 employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
 employee_attributes.to_csv("../../data/sorted_user.csv", index=False)
@@ -51,13 +51,15 @@ for employee in company.employees:
 with open('../../data/company_hierarchy.json', 'w') as outfile:
     json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
 
-
 # Read in employee to resources data and attach list of resources accessed objects to every employee
-employee_resources = pickle.load(open('../data/employee_resource_map.pkl', 'rb'))
-for employee in company.employees:
-    if(employee_resources.get(employee.id) is not None):
-        for resource in employee_resources.get(employee.id):
-            employee.add_resource(resource)
+employee_resources = json.load('../../data/employee_resource_map.json')
+for employee_key in employee_resources:
+    if(company.company.get(int(employee_key)) is not None):
+        employee = company.company.get(int(employee_key))
+        resource_attr_1 = employee_resources[employee_key][0]
+        resource_attr_2 = employee_resources[employee_key][1]
+        employee.add_resource(Resource(resource_attr_1, resource_attr_2))
+
 
 # Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
 

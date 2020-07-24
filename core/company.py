@@ -29,7 +29,7 @@ class Company:
         """
         self.company = self.__create_directory(employees)
         self.hierarchy = self.__create_hierarchy(employees)
-        self.depth = self.__max_depth(employees)
+        # self.depth = self.__max_depth(employees)
         self.num_employees = len(employees)
         self.employees = employees
 
@@ -91,18 +91,18 @@ class Company:
 
         return hierarchy
 
-    def __max_depth(self, employees): #Can be improved using a DFS with hierarchy
-        """ Calculates max depth of company aka distance from lowest employee to CEO. """
-        max_depth = 0
-        for employee in employees:
-            employee_managers = set()
-            if(employee.manager_id != -1):
-                employee_manager = self.company.get(employee.manager_id)
-                while(employee_manager is not None):
-                    employee_managers.add(employee_manager)
-                    employee_manager = self.company.get(employee_manager.manager_id)
-            if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
-        return max_depth
+    # def __max_depth(self, employees): #Can be improved using a DFS with hierarchy
+    #     """ Calculates max depth of company aka distance from lowest employee to CEO. """
+    #     max_depth = 0
+    #     for employee in employees:
+    #         employee_managers = set()
+    #         if(employee.manager_id != -1):
+    #             employee_manager = self.company.get(employee.manager_id)
+    #             while(employee_manager is not None):
+    #                 employee_managers.add(employee_manager)
+    #                 employee_manager = self.company.get(employee_manager.manager_id)
+    #         if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
+    #     return max_depth
 
     def search(self, employee_id):
         """ Searches for and returns the employee object given their id.
