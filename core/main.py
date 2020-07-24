@@ -18,7 +18,7 @@ from resource import Resource
 
 
 # Read in employee attributes table and sort by manager id
-employee_attributes = pd.read_csv("../../data/olddata/user.csv") #NOTE: Currently a fake dataset
+employee_attributes = pd.read_csv("../../data/user.csv") #NOTE: Currently a fake dataset
 employee_attributes = employee_attributes.fillna(-1) # Replace all None values with -1
 employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
 employee_attributes.to_csv("../../data/sorted_user.csv", index=False)
@@ -44,9 +44,6 @@ with open('../../data/sorted_user.csv', 'r') as f:
 # Create the company
 company = Company(employees)
 
-for employee in company.employees:
-    print(employee.reports)
-
 # Output JSON file of hierarchy for Tree visualization
 with open('../../data/company_hierarchy.json', 'w') as outfile:
     json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
@@ -56,9 +53,10 @@ employee_resources = json.load('../../data/employee_resource_map.json')
 for employee_key in employee_resources:
     if(company.company.get(int(employee_key)) is not None):
         employee = company.company.get(int(employee_key))
-        resource_attr_1 = employee_resources[employee_key][0]
-        resource_attr_2 = employee_resources[employee_key][1]
-        employee.add_resource(Resource(resource_attr_1, resource_attr_2))
+        for resource in employee_resources[employee_key]:
+             resource_attr_1 = resource[0]
+             resource_attr_2 = resource[1]
+             employee.add_resource(Resource(resource_attr_1, resource_attr_2))
 
 
 # Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
