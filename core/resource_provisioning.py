@@ -3,16 +3,20 @@ import pickle
 from employee import Employee
 from resource import Resource
 import csv
-from rule import Rule
+from parsing.rule import Rule
+import timeit
 
 # gets provisioning metrics for a given resource given a rule
 # rule should be a function that takes a user and returns a boolean (examples below)
 def get_metrics(resource, rule, resource_map, company):
     actual_users = resource_map[resource]
     predicted_users = set()
+    start = timeit.default_timer()
     for user in company:
         if rule.passes(user):
             predicted_users.add(user.id)
+    end = timeit.default_timer()
+    print("Time: ", end - start)
     print("actual: %d , predicted: %d"%(len(actual_users),len(predicted_users)))
     metrics = calculate_metrics(actual_users, predicted_users)
     return metrics
