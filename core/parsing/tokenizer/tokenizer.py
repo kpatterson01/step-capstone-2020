@@ -8,26 +8,27 @@ class Tokenizer:
     # Basic function to tokenize string
     def tokenize(string):
         tokens = []
-        string = string.strip()
+        string = string.lower().strip()
         start = 0
         for i in range(len(string)):
             if string[i] == ' ':
-                tokens.append(string[start:i].strip())
+                if start != i:
+                    tokens.append(string[start:i].strip())
                 start = i+1
             elif string[i] == '(':
                 tokens.append('(')
                 start = i+1
             elif string[i] == ')':
-                tokens.append(string[start:i].strip())
+                if start != i:
+                    tokens.append(string[start:i].strip())
                 tokens.append(')')
                 start = i+1
 
-        tokens.append(string[start:len(string)])
+        if start != len(string):
+            tokens.append(string[start:len(string)])
 
         for token in tokens:
             if not Tokenizer.passes_token_check(token):
-                print(token)
-                print(string)
                 raise Exception('invalid token: ' , token)
 
         return tokens
