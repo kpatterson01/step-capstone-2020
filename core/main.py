@@ -46,10 +46,11 @@ company = Company(employees)
 
 # Output JSON file of hierarchy for Tree visualization
 with open('../../data/company_hierarchy.json', 'w') as outfile:
-    json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
+    json.dump(company.hierarchy, outfile, indent=2, sort_keys=True)
 
 # Read in employee to resources data and attach list of resources accessed objects to every employee
-employee_resources = json.load('../../data/employee_resource_map.json')
+with open('../../data/employee_resource_map.json','r') as infile: 
+    employee_resources = json.load(infile)
 for employee_key in employee_resources:
     if(company.company.get(int(employee_key)) is not None):
         employee = company.company.get(int(employee_key))

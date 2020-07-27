@@ -136,7 +136,7 @@ class Company:
         employee_one_managers = set()
         employee_two_managers = set()
         if(employee_one.manager_id == -1): employee_one_managers.add(employee_one.id)
-        if(employee_two.manager_id == -1): employee_two_manaers.add(employee_two.id)
+        if(employee_two.manager_id == -1): employee_two_managers.add(employee_two.id)
         while(len(employee_one_managers.intersection(employee_two_managers)) == 0):
             employee_one_managers.add(employee_one.manager_id)
             if(employee_one.manager_id != -1):
