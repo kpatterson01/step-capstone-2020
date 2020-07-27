@@ -1,30 +1,28 @@
-<!--Created by Kayla Patterson on 07/24/2020 
+<!--Created by Kayla Patterson on 07/24/2020
 HTML file for displaying tree hierarchy-->
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>User Hierachy Tree</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='tree-style.css') }}"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='tree-style.css') }}">
     </head>
     <body>
         <!--Side Bar with input form-->
         <div class="sidenav">
             <h1>User Hierarchy Tree</h1>
-            <form>
-                <label for="user_1">Enter User_1:</label><br>
-                <input type="text" id="user_1" name="user_1"><br>
-                <label for="user_2">Enter User_2:</label><br>
-                <input type="text" id="user_2" name="user_2"><br><br>
-                <input type="submit" value="Calculate Distance">
-            </form>
-            <a href="index.html">Go Back</a>
+              <label for="user_1">Enter User_1:</label><br>
+              <input type="text" id="user_1" name="user_1"><br>
+              <label for="user_2">Enter User_2:</label><br>
+              <input type="text" id="user_2" name="user_2"><br><br>
+              <button type="submit" onclick="calculate()">Calculate Distance</button>
+            <a href="/">Go Back</a>
         </div>
         <!--svg of tree hierarchy layout-->
         <svg></svg>
 
-        <!-- load the d3.js library --> 
+        <!-- load the d3.js library -->
         <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src="{{url_for('static', filename='tree-script.js')}}"></script>
+        <script src="../static/tree-script.js"></script>
     </body>
-</html 
+</html>
