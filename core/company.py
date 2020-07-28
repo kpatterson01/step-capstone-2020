@@ -67,13 +67,13 @@ class Company:
         """
         top_managers = []
         for employee in employees:
-            if(employee.manager_id == -1):
+            if(employee.manager_id == 258004):
                 top_managers.append(employee)
 
-        dummy_ceo = Employee({"id":-100,
+        dummy_ceo = Employee({"id":258004,
                             "department":-100,
                             "cost_center":-100,
-                            "manager_id":-100,
+                            "manager_id":258004,
                             "location":-100,
                             "lowest_dir_id":-100,
                             "job_family":-100 })
@@ -145,7 +145,7 @@ class Company:
             if(employee_two.manager_id != -1):
                 employee_two_managers.add(employee_two.manager_id)
                 employee_two = self.search(employee_two.manager_id)
-
+        # print(employee_one_managers.intersection(employee_two_managers))
         return max(len(employee_one_managers), len(employee_two_managers))
 
     def usage_similarity(self, employee_one, employee_two):

@@ -1,15 +1,40 @@
 /*Created by Kayla Patterson on 07/23/2020
-* Used D3.js to construct tree hierachy  
-*/  
+* Used D3.js to construct tree hierachy
+*/
 
+// Calcuate distance and usage similarity
+async function calculate() {
+  var employee_one_id = document.getElementById("user_2");
+  var employee_two_id = document.getElementById("user_1");
+
+  var data = {
+    "employee_one_id": employee_one_id.value,
+    "employee_two_id": employee_two_id.value
+  }
+
+  var response = await fetch(`${window.origin}/api/distance`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  var metricData = await response.json();
+
+  //TODO: Add logic to do 1) form validation 2) display on frontend
+  console.log(metricData);
+}
+
+// Showing the tree
 var treeData =
 {
   "name": "1",
   "children": [
-    { 
+    {
       "name": "2",
       "children": [
-        { 
+        {
             "name": "5",
             "children": [
                 { "name": "6" },
@@ -23,15 +48,15 @@ var treeData =
         { "name": "8" }
       ]
     },
-    { 
-        "name": "9", 
+    {
+        "name": "9",
         "children": [
         { "name": "10"},
         { "name": "11" }
       ]
     },
-    { 
-        "name": "4", 
+    {
+        "name": "4",
         "children": [
         { "name": "12" },
         { "name": "13" }
@@ -40,9 +65,9 @@ var treeData =
   ]
 };
 
-//treeData = FileAttachment("treeData").json(); 
-//var treeData = FileReader("treeData").json(); 
-//var treeData = treeData.json; 
+//var treeData = FileAttachment("../../data/frontend_tree.json").json();
+//var treeData = FileReader("treeData").json();
+//var treeData = treeData.json;
 
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
@@ -136,7 +161,7 @@ var nodeUpdate = nodeEnter.merge(node);
 // Transition to the proper position for the node
 nodeUpdate.transition()
   .duration(duration)
-  .attr("transform", function(d) { 
+  .attr("transform", function(d) {
       return "translate(" + d.y + "," + d.x + ")";
    });
 
