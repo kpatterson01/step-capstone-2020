@@ -80,7 +80,7 @@ with open('../../data/user-resource-2009.csv', 'r') as f:
                         "resource_attr_2": resource[4],
                         "count":resource[5]
                         }
-            small_usage = small_usage.append(employee_data, ignore_index=True)
+            small_usage = small_usage.append(usage_data, ignore_index=True)
 
 small_usage.to_csv("../../data/smalldata/small_usage.csv", index=False)
 print(small_usage)
