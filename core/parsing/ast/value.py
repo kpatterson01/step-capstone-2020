@@ -5,5 +5,5 @@ class Value(Node):
     def __init__(self, val):
         self.val = val
 
-    def get_lambda():
+    def get_lambda(self):
         return lambda: self.val

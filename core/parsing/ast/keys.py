@@ -1,10 +1,10 @@
 from node import Node
 
-class key(Node):
+class Key(Node):
     ''' abstract key '''
     pass
 
-class id(key):
+class Id(Key):
     
     def __init__(self):
         pass
@@ -12,7 +12,7 @@ class id(key):
     def get_lambda(self):
         return lambda user: user.id
 
-class department(key):
+class Department(Key):
 
     def __init__(self):
         pass
@@ -20,7 +20,7 @@ class department(key):
     def get_lambda(self):
         return lambda user: user.department
 
-class cost_center(key):
+class Cost_Center(Key):
 
     def __init__(self):
         pass
@@ -28,7 +28,7 @@ class cost_center(key):
     def get_lambda(self):
         return lambda user: user.cost_center
 
-class manager_id(key):
+class Manager_Id(Key):
 
     def __init__(self):
         pass
@@ -36,7 +36,7 @@ class manager_id(key):
     def get_lambda(self):
         return lambda user: user.manager_id
 
-class location(key):
+class Location(Key):
 
     def __init__(self):
         pass
@@ -44,7 +44,7 @@ class location(key):
     def get_lambda(self):
         return lambda user: user.location
 
-class lowest_dir_id(key):
+class Lowest_Dir_Id(Key):
 
     def __init__(self):
         pass
@@ -52,7 +52,7 @@ class lowest_dir_id(key):
     def get_lambda(self):
         return lambda user: user.lowest_dir_id
 
-class job_family(key):
+class Job_Family(Key):
 
     def __init__(self):
         pass

@@ -1,4 +1,7 @@
 from node import Node
+from keys import *
+from value import Value
+from comparators import *
 
 class Parameter(Node):
 
@@ -11,9 +14,9 @@ class Parameter(Node):
         else:
             raise ValueError('Invalid types of input for Parameter')
 
-    def get_lambda():
+    def get_lambda(self):
         comparator = self.comp.get_lambda()
         key = self.key.get_lambda()
         value = self.value.get_lambda()
-        param = lambda user: comparator(key(user),value(user))
+        param = lambda user: comparator(key(user),value())
         return param
