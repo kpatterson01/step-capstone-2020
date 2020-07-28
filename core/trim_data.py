@@ -68,7 +68,7 @@ columns = ["anon_person_id", "access_year", "access_month", "resource_attr_1",
 
 small_usage = pd.DataFrame(columns=columns)
 
-big_usage = pd.read_csv(file_path, chunksize = 10000, iterator=True)
+big_usage = pd.read_csv("../../data/user-resource-2009.csv", chunksize = 10000, iterator=True)
 for chunk in big_usage:
     for index, resource in chunk.iterrows():
         if(int(resource[0]) in small_employee_ids):
