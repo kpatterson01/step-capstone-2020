@@ -68,10 +68,9 @@ columns = ["anon_person_id", "access_year", "access_month", "resource_attr_1",
 
 small_usage = pd.DataFrame(columns=columns)
 
-with open('../../data/user-resource-2009.csv', 'r') as f:
-    reader = csv.reader(f)
-    next(reader)
-    for resource in reader:
+big_usage = pd.read_csv(file_path, chunksize = 10000, iterator=True)
+for chunk in big_usage:
+    for index, resource in chunk.iterrows():
         if(int(resource[0]) in small_employee_ids):
             usage_data = { "anon_person_id": resource[0],
                         "access_year": resource[1],
@@ -80,7 +79,7 @@ with open('../../data/user-resource-2009.csv', 'r') as f:
                         "resource_attr_2": resource[4],
                         "count":resource[5]
                         }
-            small_usage = small_usage.append(employee_data, ignore_index=True)
+            small_usage = small_usage.append(usage_data, ignore_index=True)
 
 small_usage.to_csv("../../data/smalldata/small_usage.csv", index=False)
 print(small_usage)
