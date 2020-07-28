@@ -2,8 +2,8 @@
 Description: Creates the Provision and Recall 
 Pie Charts, and populates them from data on the backend*/
 
-//Provision Pie Chart 
-new Chart(document.getElementById("provision-chart"), {
+//Precision Pie Chart 
+new Chart(document.getElementById("precision-chart"), {
     type: 'pie',
     data: {
       labels: ["Should of had Access", "Should Not of had Access"],
@@ -15,7 +15,7 @@ new Chart(document.getElementById("provision-chart"), {
     options: {
       title: {
         display: true,
-        text: 'Provision Resource Chart'
+        text: 'Precision Resource Chart'
       }
     }
 });

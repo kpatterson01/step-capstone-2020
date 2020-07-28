@@ -25,14 +25,20 @@
             <input type="text" id="resource_id_2" name="id_2"><br><br>
             <button type="button" id="btnsearchPath" style="font-size: 18px;">Calculate</button> 	    
 	    </form>
-        <h4>Provisioning Calulcations:</h4>
-        <h4>Recall Calculations:</h4> 
+        <h4>Precision:</h4>
+        <h4>Recall:</h4><br><br>
+        <form>
+            <label for="resource_1">Enter Resource:</label><br>
+            <input type="text" id="resource_id_1" name="id_1"><br>
+            <input type="text" id="resource_id_2" name="id_2"><br><br>
+            <button type="button" id="btnsearchPath" style="font-size: 18px;">Find Rule</button>
+        </form><br><br>
 
         <a href="index.html">Go Back</a> 
     </div> 
     
     <!-- Pie Charts --> 
-    <canvas id="provision-chart" width="900" height="300"></canvas>
+    <canvas id="precision-chart" width="900" height="300"></canvas>
     <canvas id="recall-chart" width="900" height="300"></canvas>
    
     <! --pie-script.js file-->
