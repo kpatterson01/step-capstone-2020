@@ -12,7 +12,7 @@ async function calculate() {
     "employee_two_id": employee_two_id.value
   }
 
-  var response = await fetch(`${window.origin}/api/distance`, {
+  var distanceResponse = await fetch(`${window.origin}/api/distance`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json'
@@ -20,10 +20,20 @@ async function calculate() {
     body: JSON.stringify(data)
   })
 
-  var metricData = await response.json();
+  var usageResponse = await fetch(`${window.origin}/api/usage`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  var distanceData = await distanceResponse.json();
+  var usageData = await usageResponse.json();
 
   //TODO: Add logic to do 1) form validation 2) display on frontend
-  console.log(metricData);
+  console.log(distanceData);
+  console.log(usageData);
 }
 
 // Showing the tree
