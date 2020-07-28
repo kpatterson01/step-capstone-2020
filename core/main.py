@@ -25,7 +25,7 @@ from resource import Resource
 
 # Read in lines of employee data and create list of employee objects
 employees = []
-with open('../../data/sorted_user.csv', 'r') as f:
+with open('../../data/smalldata/small_user.csv', 'r') as f:
     reader = csv.reader(f)
     next(reader)
     for user in reader:
@@ -43,12 +43,15 @@ with open('../../data/sorted_user.csv', 'r') as f:
 
 # Create the company
 company = Company(employees)
-print(company)
+
+print(company.company)
+print(company.hierarchy)
 
 # Output JSON file of hierarchy for Tree visualization
-with open('../../data/company_hierarchy.json', 'w') as outfile:
+with open('../../data/smalldata/small_company_hierarchy.json', 'w') as outfile:
     json.dump(company.hierarchy, outfile, indent=2, sort_keys=True)
 
+<<<<<<< HEAD
 # # Read in employee to resources data and attach list of resources accessed objects to every employee
 # employee_resources = json.load('../../data/employee_resource_map.json')
 # for employee_key in employee_resources:
@@ -61,6 +64,27 @@ with open('../../data/company_hierarchy.json', 'w') as outfile:
 #
 
 # Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
+=======
+# Read in employee to resources data and attach list of resources accessed objects to every employee
+employee_resources = json.load('../../data/smalldata/small_employee_resource_map.json')
+for employee_key in employee_resources:
+    if(company.company.get(int(employee_key)) is not None):
+        employee = company.company.get(int(employee_key))
+        for resource in employee_resources[employee_key]:
+             resource_attr_1 = resource[0]
+             resource_attr_2 = resource[1]
+             employee.add_resource(Resource(resource_attr_1, resource_attr_2))
+
+print(company.employees)
+
+for employee in company.employees:
+    print(employee.resources)
+
+with open('../../data/smalldata/small_company_object.pkl', 'wb') as outfile:
+     pickle.dump(company, outfile)
+
+#Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
+>>>>>>> 35eee2d5fd4807ec881478187a4f72a091d0e4ba
 
 #(sample function from utilities/distance_validation.py)
 # def sample(num, low, high, company):
@@ -78,7 +102,10 @@ with open('../../data/company_hierarchy.json', 'w') as outfile:
 #     """
 #     random_sample = pd.DataFrame(columns = ["user_one_id", "user_two_id", "distance", "usage_similarity"])
 #     for i in range(num):
-#         employee_one = company.search(randint(low, high))
+#         rand_one= randint(low, high)
+#         rand_two = randint(low, high)
+#         while(company.company.get(int()))
+#         employee_one = company.com(randint(low, high))
 #         employee_two = company.search(randint(low, high))
 #         dist = company.distance(employee_one, employee_two)
 #         #usage_similarity = company.usage_similarity(employee_one, employee_two)
@@ -91,6 +118,6 @@ with open('../../data/company_hierarchy.json', 'w') as outfile:
 #     return random_sample
 #
 # # Output pairs and respective metrics in a csv
-# metric_data = sample(10, 0, 268027, company)
+# metric_data = sample(50, 0, 260000, company)
 # print(metric_data)
 # metric_data.to_csv("../../data/metric_data.csv")

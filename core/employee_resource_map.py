@@ -10,7 +10,7 @@ from resource import Resource
 
 if __name__ == "__main__":
 
-    file_path = os.path.expanduser("../../data/user-resource-2009.csv")
+    file_path = os.path.expanduser("../../data/smalldata/small_usage.csv")
     read_file = pd.read_csv(file_path, chunksize = 10000)
     employee_resources = {}
 
@@ -30,5 +30,5 @@ if __name__ == "__main__":
                 employee_resources[employee_id].append(resource)
 
 
-    with open(os.path.expanduser("../../data/employee_resource_map.json"), "w") as f:
+    with open(os.path.expanduser("../../data/smalldata/small_employee_resource_map.json"), "w") as f:
         json.dump(employee_resources, f)
