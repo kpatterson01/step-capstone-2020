@@ -10,7 +10,7 @@ import pandas as pd
 from company import Company
 from employee import Employee
 
-with open('../../data/company_hierarchy.json', 'r') as infile:
+with open('../../data/smalldata/small_company_hierarchy.json', 'r') as infile:
     small_company = json.load(infile)
 
 small_employee_ids = set()
@@ -63,8 +63,8 @@ print(len(small_employee_ids))
 # print(small_user)
 
 
-columns = ["anon_person_id", "anon_department", "anon_cost_center_num", "anon_manager_person_id",
-        "anon_location_country","anon_lowest_dir_person_id", "anon_visible_job_family", "anon_person_type"]
+columns = ["anon_person_id", "access_year", "access_month", "resource_attr_1",
+        "resource_attr_2","count"]
 
 small_usage = pd.DataFrame(columns=columns)
 
@@ -72,11 +72,13 @@ with open('../../data/user-resource-2009.csv', 'r') as f:
     reader = csv.reader(f)
     next(reader)
     for resource in reader:
-        if(int(user[0]) in small_employee_ids):
+        if(int(resource[0]) in small_employee_ids):
             usage_data = { "anon_person_id": resource[0],
-                        "access_date": resource[1],
-                        "resource_attr_1": resource[2],
-                        "resource_attr_2": resource[]
+                        "access_year": resource[1],
+                        "access_month":resource[2],
+                        "resource_attr_1": resource[3],
+                        "resource_attr_2": resource[4],
+                        "count":resource[5]
                         }
             small_usage = small_usage.append(employee_data, ignore_index=True)
 
