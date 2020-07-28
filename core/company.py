@@ -4,6 +4,7 @@
 
 import json
 from employee import Employee
+from resource import Resource
 
 class Company:
     """ This class simulates the managerial hierarchy tree of a company.
