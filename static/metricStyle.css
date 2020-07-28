@@ -21,3 +21,7 @@
     display: block;
 }
 
+canvas {
+    margin-left: 8em; 
+}
+
