@@ -34,8 +34,6 @@ class TestManagerialHierarchy(unittest.TestCase):
     def test_hierarchy(self):
         # Test that the dictionary hierarchy is created correctly
         company_hierarchy = self.company.hierarchy
-        with open('../../data/test_hierarchy.json', 'w') as outfile:
-            json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
         self.assertEqual(self.actual_hierarchy, company_hierarchy)
 
 

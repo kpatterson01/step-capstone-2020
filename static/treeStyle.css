@@ -1,24 +1,24 @@
-/*Sidebar Menu*/ 
+/*Sidebar Menu*/
 .sidenav {
-    color: white; 
-    height: 100%; 
-    width: 300px; 
-    position: fixed; 
-    z-index: 1; 
-    top: 0; 
-    left: 0; 
+    color: white;
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
     background-color: #0C5683;
-    overflow-x: hidden; 
-    padding-top: 20px; 
+    overflow-x: hidden;
+    padding-top: 20px;
 }
 
-/*Sidebar Menu Links*/ 
+/*Sidebar Menu Links*/
 .sidenav a {
-    padding: 6px 8px 6px 16px; 
-    text-decoration: none; 
-    font-size: 25px; 
-    color: #818181; 
-    display: block; 
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
 }
 
 /*Hierachy Tree*/
@@ -39,9 +39,9 @@
 }
 
 .title {
-    text-align: center; 
+    text-align: center;
 }
 
 svg {
-    margin-left: auto; 
+    margin-left: auto;
 }

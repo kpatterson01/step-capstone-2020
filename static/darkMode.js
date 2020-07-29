@@ -1,5 +1,5 @@
 /*Created by Kayla L. Patterson on 07/28/20
-Description: Creates a dark mode feature when toggle button is 
+Description: Creates a dark mode feature when toggle button is
 clicked on. Used DarkMode.js library to implement this feature.*/
 
 const options = {
@@ -18,24 +18,23 @@ const options = {
 
 const darkmode =  new Darkmode();
 
-// When toggle switch is clicked on 
+// When toggle switch is clicked on
 const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 toggleSwitch.addEventListener('change', switchTheme, false);
 
 function switchTheme(e) {
-    //Dark Mode 
+    //Dark Mode
     if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        darkmode.toggle(); 
+        darkmode.toggle();
         console.log(darkmode.isActivated()) // will return true
-        localStorage.setItem('theme', 'dark'); //stores dark mode in memory 
+        localStorage.setItem('theme', 'dark'); //stores dark mode in memory
     }
-    //Light Mode 
+    //Light Mode
     else {
         document.documentElement.setAttribute('data-theme', 'light');
-        darkmode.toggle(); 
+        darkmode.toggle();
         console.log(!darkmode.isActivated()) // will return false
-        localStorage.setItem('theme', 'light'); //stores light mode in memory 
-    }    
+        localStorage.setItem('theme', 'light'); //stores light mode in memory
+    }
 }
-

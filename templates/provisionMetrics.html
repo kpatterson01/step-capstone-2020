@@ -1,16 +1,18 @@
-<!DOCTYPE html> 
-<head> 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Provisioning Metrics</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename='metricStyle.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='darkMode.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-</head> 
-<body> 
-    <!-- Side Navigation --> 
+</head>
+<body>
+    <!-- Side Navigation -->
     <div class="sidenav">
 	    <h1>Provisioning Metrics</h1>
-        <!--Dark Mode toggle button --> 
+        <!--Dark Mode toggle button -->
         <em>Enable Dark Mode!</em>
             <div class="theme-switch-wrapper">
                 <label class="theme-switch" for="checkbox">
@@ -25,23 +27,20 @@
             <input type="text" id="resource_id_2" name="id_2"><br><br>
             <label for="resource_1">Enter Rule:</label><br>
             <input type="text" id="rule" name="rule"><br><br>
-            <button type="button" id="btnsearchPath" style="font-size: 18px;">Find Rule</button> 	    
+            <button type="button" id="btnsearchPath" style="font-size: 18px;">Find Rule</button>
 	    </form>
         <h4>Precision:</h4>
         <h4>Recall:</h4><br><br>
-
-        <a href="index.html">Go Back</a> 
-    </div> 
-    
-    <!-- Pie Charts --> 
+        <a href="index.html">Go Back</a>
+    </div>
+    <!-- Pie Charts -->
     <canvas id="precision-chart" width="900" height="300"></canvas>
     <canvas id="recall-chart" width="900" height="300"></canvas>
-   
-    <! --pie-script.js file-->
-    <script src="{{url_for('static', filename='pieScript.js')}}"></script>    
+
+    <! --pieScript.js file-->
+    <script src="{{url_for('static', filename='pieScript.js')}}"></script>
     <!--Dark Mode -->
     <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.6/lib/darkmode-js.min.js"></script>
     <script src="{{url_for('static', filename='darkMode.js')}}"></script>
-</body> 
-
+</body>
 </html>
