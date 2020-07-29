@@ -5711,6 +5711,7 @@ var nodeUpdate = nodeEnter.merge(node);
 nodeUpdate.transition()
   .duration(duration)
   .attr("transform", function(d) {
+
       return "translate(" + d.y + "," + d.x + ")";
    });
 
