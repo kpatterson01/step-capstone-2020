@@ -1,6 +1,54 @@
 /*Created by Kayla Patterson on 07/23/2020
 * Used D3.js to construct tree hierachy
 */
+
+// Calcuate distance and usage similarity
+async function calculate() {
+  var employee_one_id = document.getElementById("user_2");
+  var employee_two_id = document.getElementById("user_1");
+
+  var data = {
+    "employee_one_id": employee_one_id.value,
+    "employee_two_id": employee_two_id.value
+  }
+
+  var distanceResponse = await fetch(`${window.origin}/api/distance`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  var usageResponse = await fetch(`${window.origin}/api/usage`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  console.log(distanceResponse.status);
+  console.log(usageResponse.status);
+
+  var distanceData = await distanceResponse.json();
+  var usageData = await usageResponse.json();
+  console.log(distanceData);
+  console.log(usageData);
+
+  if(distanceResponse.status == 200) {
+    document.getElementById("distance").innerHTML = 'Distance: '+ distanceData.data;
+  } else {
+    document.getElementById("distance").innerHTML = 'Employee not found.';
+  }
+
+  if(usageResponse.status == 200) {
+    document.getElementById("usage").innerHTML = 'Usage: '+ usageData.data;
+  } else {
+    document.getElementById("usage").innerHTML = 'No resources found for one or more employee.';
+  }
+}
+
 var treeData =
 {
 

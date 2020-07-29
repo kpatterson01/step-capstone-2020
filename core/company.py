@@ -92,7 +92,7 @@ class Company:
 
         return hierarchy
 
-    # def __max_depth(self, employees): #Can be improved using a DFS with hierarchy
+    # def __max_depth(self, employees): #Can be improved using a DFS with new hierarchy data structure, come back to if time
     #     """ Calculates max depth of company aka distance from lowest employee to CEO. """
     #     max_depth = 0
     #     for employee in employees:
@@ -142,10 +142,8 @@ class Company:
             employee_one_managers.add(employee_one.manager_id)
             employee_two_managers.add(employee_two.manager_id)
             if(employee_one.manager_id != 258004):
-                print(employee_one.manager_id)
                 employee_one = self.search(employee_one.manager_id)
             if(employee_two.manager_id != 258004):
-                print(employee_two.manager_id)
                 employee_two = self.search(employee_two.manager_id)
         return max(len(employee_one_managers), len(employee_two_managers))
 

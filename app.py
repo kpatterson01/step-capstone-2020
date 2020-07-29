@@ -43,18 +43,34 @@ def calculate_distance():
         employee_two = company.search(int(body.get("employee_two_id")))
         distance = company.distance(employee_one, employee_two)
     except:
-        return failure_response("One or more employees not found.")
+        return failure_response("One or more employees not found.", 500)
     return success_response(distance)
 
 @app.route("/api/usage", methods=["POST"])
 def calculate_usage_similarity():
     body = json.loads(request.data)
+
     try:
         employee_one = company.search(int(body.get("employee_one_id")))
         employee_two = company.search(int(body.get("employee_two_id")))
+        distance = company.distance(employee_one, employee_two)
     except:
-        return failure_response("One or more employees not found.")
-    usage_similarity = company.usage_similarity(employee_one, employee_two)
+        return failure_response("One or more employees not found in company.", 500)
+
+    employee_one_resources = employee_resources.get(str(employee_one.id))
+    employee_two_resources = employee_resources.get(str(employee_two.id))
+    # Check if no resources attached to employee
+    if(employee_one_resources is None or employee_two_resources is None):
+        return failure_response("No usage data for one or both of these employees", 500)
+    else:
+        # If so create set of tuples with corresponding resources for each employee
+        resource_set_one = set()
+        resource_set_two = set()
+        for resource in employee_one_resources:
+            resource_set_one.add((resource[0], resource[1]))
+        for resource in employee_two_resources:
+            resource_set_two.add((resource[0], resource[1]))
+        usage_similarity = len(resource_set_one.intersection(resource_set_two))
     return success_response(usage_similarity)
 
 if __name__ == "__main__":
