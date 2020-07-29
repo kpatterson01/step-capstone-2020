@@ -31,36 +31,36 @@ read_employees_from_tree(small_company)
 print(small_employee_ids)
 print(len(small_employee_ids))
 
-# big_user = pd.read_csv("../../data/sorted_user.csv", chunksize=10000, iterator=True)
-# for chunk in big_user:
-#     for index, row in chunk.iterrows():
-#         if(int(row["anon_person_id"]) not in small_employee_ids):
-#             chunk.drop(index, inplace=True)
-#             chunk.to_csv("../../data/smalldata/small_user.csv", mode='a', index=False)
+big_user = pd.read_csv("../../data/sorted_user.csv", chunksize=10000, iterator=True)
+for chunk in big_user:
+    for index, row in chunk.iterrows():
+        if(int(row["anon_person_id"]) not in small_employee_ids):
+            chunk.drop(index, inplace=True)
+            chunk.to_csv("../../data/smalldata/small_user.csv", mode='a', index=False)
 
-# columns = ["anon_person_id", "anon_department", "anon_cost_center_num", "anon_manager_person_id",
-#         "anon_location_country","anon_lowest_dir_person_id", "anon_visible_job_family", "anon_person_type"]
-#
-# small_user = pd.DataFrame(columns=columns)
-#
-# with open('../../data/sorted_user.csv', 'r') as f:
-#     reader = csv.reader(f)
-#     next(reader)
-#     for user in reader:
-#         if(int(user[0]) in small_employee_ids):
-#             employee_data = { "anon_person_id": user[0],
-#                             "anon_department": user[1],
-#                             "anon_cost_center_num": user[2],
-#                             "anon_manager_person_id": user[3],
-#                             "anon_location_country": user[4],
-#                             "anon_lowest_dir_person_id": user[5],
-#                             "anon_visible_job_family": user[6],
-#                             "anon_person_type": user[7] }
-#             small_user = small_user.append(employee_data, ignore_index=True)
-#
-#
-# small_user.to_csv("../../data/smalldata/small_user.csv", index=False)
-# print(small_user)
+columns = ["anon_person_id", "anon_department", "anon_cost_center_num", "anon_manager_person_id",
+        "anon_location_country","anon_lowest_dir_person_id", "anon_visible_job_family", "anon_person_type"]
+
+small_user = pd.DataFrame(columns=columns)
+
+with open('../../data/sorted_user.csv', 'r') as f:
+    reader = csv.reader(f)
+    next(reader)
+    for user in reader:
+        if(int(user[0]) in small_employee_ids):
+            employee_data = { "anon_person_id": user[0],
+                            "anon_department": user[1],
+                            "anon_cost_center_num": user[2],
+                            "anon_manager_person_id": user[3],
+                            "anon_location_country": user[4],
+                            "anon_lowest_dir_person_id": user[5],
+                            "anon_visible_job_family": user[6],
+                            "anon_person_type": user[7] }
+            small_user = small_user.append(employee_data, ignore_index=True)
+
+
+small_user.to_csv("../../data/smalldata/small_user.csv", index=False)
+print(small_user)
 
 
 columns = ["anon_person_id", "access_year", "access_month", "resource_attr_1",

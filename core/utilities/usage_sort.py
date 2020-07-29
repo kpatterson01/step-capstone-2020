@@ -109,7 +109,6 @@ def external_sort(dataframe,output_path):
     for f in glob.glob("./tmp*.csv"):
         os.remove(f)
 
-
 if __name__ ==  "__main__":
     #row per chunk. This should be changed based on how much ram is avaliable
     chunk_size = 100000
