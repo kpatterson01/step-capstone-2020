@@ -79,7 +79,7 @@ def load_company():
                 attributes["job_family"] = int(user[6])
             employee = Employee(attributes)
             company.add(employee)
-    
+
     print("Company size: %d" % len(company))
 
     return company

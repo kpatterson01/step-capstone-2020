@@ -2,6 +2,7 @@
 # File to output data for visualizing regression of employees attribute similarity vs usage similarity.
 
 import csv
+import json
 from random import randint
 import pickle
 
@@ -17,15 +18,15 @@ from resource import Resource
 
 
 # Read in employee attributes table and sort by manager id
-employee_attributes = pd.read_csv("../data/user.csv") #NOTE: Currently a fake dataset
+employee_attributes = pd.read_csv("../../data/user.csv") #NOTE: Currently a fake dataset
 employee_attributes = employee_attributes.fillna(-1) # Replace all None values with -1
 employee_attributes = employee_attributes.sort_values(by=["anon_manager_person_id"], ascending=True)
-employee_attributes.to_csv("../data/sorted_user.csv", index=False)
+employee_attributes.to_csv("../../data/sorted_user.csv", index=False)
 
 
 # Read in lines of employee data and create list of employee objects
 employees = []
-with open('../data/sorted_attribute_table.csv', 'r') as f:
+with open('../../data/sorted_user.csv', 'r') as f:
     reader = csv.reader(f)
     next(reader)
     for user in reader:
@@ -43,18 +44,20 @@ with open('../data/sorted_attribute_table.csv', 'r') as f:
 # Create the company
 company = Company(employees)
 
-# For every employee, add them to their mangers list of reports
-for employee in company.employees:
-    if(company.company.get(employee.manager_id) is not None):
-        manager = company.search(employee.manager_id)
-        manager.add_report(employee)
+# Output JSON file of hierarchy for Tree visualization
+with open('../../data/company_hierarchy.json', 'w') as outfile:
+    json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
 
 # Read in employee to resources data and attach list of resources accessed objects to every employee
-employee_resources = pickle.load(open('../data/employee_resource_map.pkl', 'rb'))
-for employee in company.employees:
-    if(employee_resources.get(employee.id) is not None):
-        for resource in employee_resources.get(employee.id):
-            employee.add_resource(resource)
+employee_resources = json.load('../../data/employee_resource_map.json')
+for employee_key in employee_resources:
+    if(company.company.get(int(employee_key)) is not None):
+        employee = company.company.get(int(employee_key))
+        for resource in employee_resources[employee_key]:
+             resource_attr_1 = resource[0]
+             resource_attr_2 = resource[1]
+             employee.add_resource(Resource(resource_attr_1, resource_attr_2))
+
 
 # Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
 
@@ -87,9 +90,5 @@ def sample(num, low, high, company):
     return random_sample
 
 # Output pairs and respective metrics in a csv
-metric_data = sample(50, 0, 50, company)
-metric_data = pd.to_csv("../data/metric_data.csv")
-
-# Create regression plot of Distance vs. Usage Similarity
-sns.set(color_codes=True)
-sns.regplot(x="Distance", y="Usage Similarity", data=metric_data)
+metric_data = sample(500, 0, 268027, company)
+metric_data = pd.to_csv("../../data/metric_data.csv")

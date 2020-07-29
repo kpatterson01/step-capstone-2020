@@ -5,6 +5,74 @@ import unittest
 from company import Company
 from employee import Employee
 from resource import Resource
+import json
+
+class TestManagerialHierarchy(unittest.TestCase):
+
+    def setUp(self):
+        self.employees = [Employee({  "id": 0, "department": 10, "cost_center":10, "manager_id": -1,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 1, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 2, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 8, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 7, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10})]
+        self.company = Company(self.employees)
+        # Company:
+        #             0
+        #     1       2       8
+        #                   7
+
+        self.actual_hierarchy = { "Employee": -100, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1},
+                                                                                {"Employee": 2 },
+                                                                                {"Employee": 8, "Reports":[ {"Employee": 7 }]}
+                                                                        ]}
+                                                                ]}
+    def test_hierarchy(self):
+        # Test that the dictionary hierarchy is created correctly
+        company_hierarchy = self.company.hierarchy
+        with open('../../data/test_hierarchy.json', 'w') as outfile:
+            json.dump(company_hierarchy, outfile, indent=2, sort_keys=True)
+        self.assertEqual(self.actual_hierarchy, company_hierarchy)
+
+
+class TestMaxDepth(unittest.TestCase):
+
+    def setUp(self):
+        self.employees = [Employee({  "id": 0, "department": 10, "cost_center":10, "manager_id": -1,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 1, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 2, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 8, "department": 10, "cost_center":10, "manager_id":0,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 14, "department": 10, "cost_center":10, "manager_id":2,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 11, "department": 10, "cost_center":10, "manager_id":2,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 9, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 12, "department": 10, "cost_center":10, "manager_id":8,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 18, "department": 10, "cost_center":10, "manager_id":9,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
+                        Employee({   "id": 4, "department": 10, "cost_center":10, "manager_id":18,
+                                    "location": 10, "lowest_dir_id":10, "job_family": 10})]
+        self.company = Company(self.employees)
+        # Company One:
+        #             0
+        #     1       2       8
+        #           11 14    9 12
+        #                   18
+        #                     4
+    def test_max_depth(self):
+        #Test max depth of this company is 4
+        depth = self.company.depth
+        self.assertEqual(4, depth)
 
 class TestSearch(unittest.TestCase):
 
@@ -24,27 +92,6 @@ class TestSearch(unittest.TestCase):
     def test_raises_error(self):
         #Test that an error is thrown when searching for employee that doesn't exist
         self.assertRaises(ReferenceError, self.company.search, 1000)
-
-
-class TestManagerHierarchy(unittest.TestCase):
-
-    def setUp(self):
-        self.employees = [Employee({  "id": 0, "department": 10, "cost_center":10, "manager_id": -1,
-                                    "location": 10, "lowest_dir_id":10, "job_family": 10}),
-                        Employee({   "id": 14, "department": 10, "cost_center":10, "manager_id":0,
-                                    "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
-        self.actual_employee = Employee({ "id": 14, "department": 10, "cost_center":10, "manager_id":0,
-                                        "location": 10, "lowest_dir_id":10, "job_family": 10})
-        self.actual_manager = Employee({ "id": 0, "department": 10, "cost_center":10, "manager_id":-1,
-                                        "location": 10, "lowest_dir_id":10, "job_family": 10})
-
-    def test_get_manager(self):
-        # Tests that a companys manager is retrieved
-        employee = Employee({ "id": 14, "department": 10, "cost_center":10, "manager_id":0,
-                                        "location": 10, "lowest_dir_id":10, "job_family": 10})
-        manager = self.company.search(employee.manager_id)
-        self.assertEqual(self.actual_manager, manager)
 
 class TestDistance(unittest.TestCase):
 
