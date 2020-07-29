@@ -1,7 +1,7 @@
 # This file contains some useful functions for metrics regarding provisioning
 import pickle
-from employee import Employee
-from resource import Resource
+from .employee import Employee
+from .resource import Resource
 import csv
 
 # gets provisioning metrics for a given resource given a rule

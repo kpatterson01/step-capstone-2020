@@ -3,17 +3,16 @@ import json, pickle, csv
 from capstone2020.core.company import Company
 from capstone2020.core.employee import Employee
 from capstone2020.core.resource import Resource
+import capstone2020.core.resource_provisioning
 
 import pandas as pd
 
 app = Flask(__name__)
 
-# Company object - Persistently stored in pickle file
 company = pickle.load(open('./data/smalldata/small_company_object.pkl', 'rb'))
-
-# Employee to resource dictionary for usage similarity data
 employee_resources = json.load(open("./data/employee_resource_map.json", 'r'))
 
+# Load usage to employee data
 
 def success_response(data, code=200):
     return json.dumps({"success": True, "data": data}), code
@@ -21,6 +20,7 @@ def success_response(data, code=200):
 
 def failure_response(message, code=404):
     return json.dumps({"success": False, "error": message}), code
+
 
 @app.route("/")
 def index():
@@ -72,6 +72,9 @@ def calculate_usage_similarity():
             resource_set_two.add((resource[0], resource[1]))
         usage_similarity = len(resource_set_one.intersection(resource_set_two))
     return success_response(usage_similarity)
+
+# Add backend routes for provision metrics
+
 
 if __name__ == "__main__":
     app.run()
