@@ -1,6 +1,6 @@
-from node import Node
-from parameter import Parameter
-from conjunctions import *
+from .node import Node
+from .parameter import Parameter
+from .conjunctions import *
 
 class Expression(Node):
     ''' This is just a superclass for the two types of expressions '''

@@ -1,5 +1,5 @@
-from node import Node
-from expressions import *
+from .node import Node
+from .expressions import *
 
 class Rule(Node):
 

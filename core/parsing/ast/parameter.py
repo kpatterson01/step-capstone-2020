@@ -1,7 +1,7 @@
-from node import Node
-from keys import *
-from value import Value
-from comparators import *
+from .node import Node
+from .keys import *
+from .value import Value
+from .comparators import *
 
 class Parameter(Node):
 

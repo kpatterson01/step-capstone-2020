@@ -1,4 +1,4 @@
-from node import Node
+from .node import Node
 
 class Conjunction(Node):
     ''' This is just a simple pseudo-abstract class '''
