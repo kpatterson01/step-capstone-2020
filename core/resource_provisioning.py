@@ -1,10 +1,10 @@
 # This file contains some useful functions for metrics regarding provisioning
 # Author: Dean Alvarez
 import pickle
-from .employee import Employee
-from .resource import Resource
+from employee import Employee
+from resource import Resource
 import csv
-from parsing.rule import Rule
+from parsing.syntax_tree import Syntax_Tree 
 import timeit
 
 # gets provisioning metrics for a given resource given a rule
@@ -56,7 +56,7 @@ def load_resource_map_from_csv():
 
 
 def load_company():
-    LOAD_PATH = "../data/smalldata/small_users.csv"
+    LOAD_PATH = "../../data/smalldata/small_user.csv"
     company = set()
     with open(LOAD_PATH, 'r') as f:
         reader = csv.reader(f)
@@ -66,31 +66,31 @@ def load_company():
             if user[0] == 'null':
                 attributes["id"] = -1
             else:
-                attributes["id"] = int(user[0])
+                attributes["id"] = int(float(user[0]))
             if user[1] == 'null':
                 attributes['department'] = -1
             else:
-                attributes["department"] = int(user[1])
+                attributes["department"] = int(float(user[1]))
             if user[2] == 'null':
                 attributes["cost_center"] = -1
             else:
-                attributes["cost_center"] = int(user[2])
+                attributes["cost_center"] = int(float(user[2]))
             if user[3] == 'null':
                 attributes["manager_id"] = -1
             else:
-                attributes["manager_id"] = int(user[3])
+                attributes["manager_id"] = int(float(user[3]))
             if user[4] == 'null':
                 attributes["location"] = -1
             else:
-                attributes["location"] = int(user[4])
+                attributes["location"] = int(float(user[4]))
             if user[5] == 'null':
                 attributes["lowest_dir_id"]  = -1
             else:
-                attributes["lowest_dir_id"]  = int(user[5])
+                attributes["lowest_dir_id"]  = int(float(user[5]))
             if user[6] == 'null':
                 attributes["job_family"] = -1
             else:
-                attributes["job_family"] = int(user[6])
+                attributes["job_family"] = int(float(user[6]))
             employee = Employee(attributes)
             company.add(employee)
 
@@ -103,8 +103,9 @@ if __name__ == "__main__":
     resource_map = load_resource_map_from_csv()
     company = load_company()
 
-    example_resource = Resource(411231,2072)
-    example_rule = Rule(None)
-    metrics = get_metrics(example_resource, example_rule, resource_map, company)
+    example_resource = Resource(6371059,203)
+    example_rule = 'department == 14'
+    syntax_tree = Syntax_Tree(example_rule)
+    metrics = get_metrics(example_resource, syntax_tree, resource_map, company)
     print(metrics)
 
