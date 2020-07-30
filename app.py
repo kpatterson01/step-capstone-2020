@@ -3,17 +3,21 @@ import json, pickle, csv
 from capstone2020.core.company import Company
 from capstone2020.core.employee import Employee
 from capstone2020.core.resource import Resource
-#import capstone2020.core.resource_provisioning
-
+import capstone2020.core.resource_provisioning as rp
+from capstone2020.core.parsing.syntax_tree import Syntax_Tree
 import pandas as pd
 
 app = Flask(__name__)
 
+# Company Hierarchy Tree data
 company = pickle.load(open('./data/smalldata/small_company_object.pkl', 'rb'))
 employee_resources = json.load(open("./data/employee_resource_map.json", 'r'))
 
-# Load usage to employee data
+# Provisioning Metrics data
+employee_set = set(company.employees)
+resource_employee_map = rp.load_resource_map_from_csv("./data/smalldata/small_resource_table.csv")
 
+# Response protocols
 def success_response(data, code=200):
     return json.dumps({"success": True, "data": data}), code
 
@@ -73,7 +77,17 @@ def calculate_usage_similarity():
         usage_similarity = len(resource_set_one.intersection(resource_set_two))
     return success_response(usage_similarity)
 
-# Add backend routes for provision metrics
+@app.route("/api/provisioning", methods=["POST"])
+def calculate_provisioning():
+    body = json.loads(request.data)
+    # body = Two numbers representing the resources, rule
+    # String defining the rule, department == 14, id == 5
+    # Create Syntax Tree (rule) - raise an error if invalid rule is passed
+    # Create the resource with attributes in the body
+    # (precision, recall) = rp.get_metrics(resource, syntax tree, resource map, employee set)
+    # - raises error if there isnt a this resource in the resource map
+    # Returns a tuple, ( precision, recall)
+
 
 
 if __name__ == "__main__":

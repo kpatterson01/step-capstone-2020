@@ -4,7 +4,26 @@ Pie Charts, and populates them from data on the backend*/
 
 //Add functions to call to backend api, and get data on pressing the buttons
 
+// Calcuate distance and usage similarity
+async function calculate() {
+  var resource_attr_1 = document.getElementById("resource_id_1");
+  var resource_attr_2 = document.getElementById("resource_id_2");
+  var rule = document.getElementById("rule");
 
+  var data = {
+    "resource_attr_1": resource_attr_1.value,
+    "resource_attr_2": resource_attr_2.value,
+    "rule": rule.value
+  }
+
+  var provisioningResponse = await fetch(`${window.origin}/api/provisioning`, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+}
 
 
 //Precision Pie Chart
