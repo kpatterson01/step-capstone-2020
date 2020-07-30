@@ -93,4 +93,3 @@ if __name__ == "__main__":
     example_rule = Rule(None)
     metrics = get_metrics(example_resource, example_rule, resource_map, company)
     print(metrics)
-

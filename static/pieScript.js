@@ -2,6 +2,11 @@
 Description: Creates the Provision and Recall
 Pie Charts, and populates them from data on the backend*/
 
+//Add functions to call to backend api, and get data on pressing the buttons
+
+
+
+
 //Precision Pie Chart
 new Chart(document.getElementById("precision-chart"), {
     type: 'pie',
