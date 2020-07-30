@@ -3,7 +3,8 @@
 # and provides several functions to manipulate and analyze the organizational hierarchy.
 
 import json
-from employee import Employee
+from .employee import Employee
+from .resource import Resource
 
 class Company:
     """ This class simulates the managerial hierarchy tree of a company.
@@ -67,13 +68,13 @@ class Company:
         """
         top_managers = []
         for employee in employees:
-            if(employee.manager_id == -1):
+            if(employee.manager_id == 258004):
                 top_managers.append(employee)
 
-        dummy_ceo = Employee({"id":-100,
+        dummy_ceo = Employee({"id":258004,
                             "department":-100,
                             "cost_center":-100,
-                            "manager_id":-100,
+                            "manager_id":258004,
                             "location":-100,
                             "lowest_dir_id":-100,
                             "job_family":-100 })
@@ -91,7 +92,7 @@ class Company:
 
         return hierarchy
 
-    # def __max_depth(self, employees): #Can be improved using a DFS with hierarchy
+    # def __max_depth(self, employees): #Can be improved using a DFS with new hierarchy data structure, come back to if time
     #     """ Calculates max depth of company aka distance from lowest employee to CEO. """
     #     max_depth = 0
     #     for employee in employees:
@@ -135,17 +136,15 @@ class Company:
             return 0
         employee_one_managers = set()
         employee_two_managers = set()
-        if(employee_one.manager_id == -1): employee_one_managers.add(employee_one.id)
-        if(employee_two.manager_id == -1): employee_two_manaers.add(employee_two.id)
+        if(employee_one.manager_id == 258004): employee_one_managers.add(employee_one.id)
+        if(employee_two.manager_id == 258004): employee_two_managers.add(employee_two.id)
         while(len(employee_one_managers.intersection(employee_two_managers)) == 0):
             employee_one_managers.add(employee_one.manager_id)
-            if(employee_one.manager_id != -1):
-                employee_one_managers.add(employee_one.manager_id)
+            employee_two_managers.add(employee_two.manager_id)
+            if(employee_one.manager_id != 258004):
                 employee_one = self.search(employee_one.manager_id)
-            if(employee_two.manager_id != -1):
-                employee_two_managers.add(employee_two.manager_id)
+            if(employee_two.manager_id != 258004):
                 employee_two = self.search(employee_two.manager_id)
-
         return max(len(employee_one_managers), len(employee_two_managers))
 
     def usage_similarity(self, employee_one, employee_two):
