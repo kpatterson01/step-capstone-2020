@@ -48,14 +48,14 @@ print(company.hierarchy)
 print(company.employees)
 
 
-# with open('../../data/smalldata/small_company_object.pkl', 'wb') as outfile:
-#      pickle.dump(company, outfile)
+with open('../../data/smalldata/small_company_object.pkl', 'wb') as outfile:
+     pickle.dump(company, outfile)
 
 # Load in employee to resource JSON object to calculate usage usage_similarit
 employee_resources = json.load(open("../../data/employee_resource_map.json", 'r'))
 
 
-#Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
+# #Sample N pairs of employees and calculate distance and usage similarity metrics for those pairs
 
 # (sample function from utilities/distance_validation.py)
 def sample(num, low, high, employees, employee_resources):
@@ -97,7 +97,7 @@ def sample(num, low, high, employees, employee_resources):
                 resource_set_one.add((resource[0], resource[1]))
             for resource in employee_two_resources:
                 resource_set_two.add((resource[0], resource[1]))
-            # Take intersection to find comm
+            # Take intersection to find num of common resources
             usage_similarity = len(resource_set_one.intersection(resource_set_two))
 
         random_sample = random_sample.append({"user_one_id": employee_one.id,
