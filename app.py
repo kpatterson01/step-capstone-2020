@@ -106,6 +106,7 @@ def calculate_provisioning():
     except Exception as e:
         print(e)
         return failure_response("Invalid rule or resource passed.", 500)
+    rp_metrics = (float("{:.2f}".format(rp_metrics[0])), float("{:.2f}".format(rp_metrics[1])))
     return success_response(rp_metrics)
 
 if __name__ == "__main__":
