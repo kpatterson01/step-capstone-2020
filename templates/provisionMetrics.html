@@ -21,16 +21,14 @@
                 </label>
         </div><br><br>
         <!--User Input -->
-	    <form>
-            <label for="resource_1">Enter Resource:</label><br>
-            <input type="text" id="resource_id_1" name="id_1"><br>
-            <input type="text" id="resource_id_2" name="id_2"><br><br>
-            <label for="resource_1">Enter Rule:</label><br>
-            <input type="text" id="rule" name="rule"><br><br>
-            <button type="button" id="btnsearchPath" style="font-size: 18px;">Find Rule</button>
-	    </form>
-        <h4>Precision:</h4>
-        <h4>Recall:</h4><br><br>
+        <label for="resource_1">Enter Resource:</label><br>
+        <input type="text" id="resource_id_1" name="id_1"><br>
+        <input type="text" id="resource_id_2" name="id_2"><br><br>
+        <label for="resource_1">Enter Rule:</label><br>
+        <input type="text" id="rule" name="rule"><br><br>
+        <button onclick="calculate()" type="button" id="btnsearchPath" style="font-size: 18px;">Find Rule</button>
+        <h4 id="precision">Precision:</h4>
+        <h4 id="recall">Recall:</h4><br><br>
         <a href="index.html">Go Back</a>
     </div>
     <!-- Pie Charts -->
@@ -38,7 +36,8 @@
     <canvas id="recall-chart" width="900" height="300"></canvas>
 
     <! --pieScript.js file-->
-    <script src="{{url_for('static', filename='pieScript.js')}}"></script>
+    <script src="{{url_for('static', filename='pieScript.js')}}" defer></script>
+
     <!--Dark Mode -->
     <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.6/lib/darkmode-js.min.js"></script>
     <script src="{{url_for('static', filename='darkMode.js')}}"></script>

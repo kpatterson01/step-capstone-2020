@@ -97,7 +97,7 @@ def sample(num, low, high, employees, employee_resources):
                 resource_set_one.add((resource[0], resource[1]))
             for resource in employee_two_resources:
                 resource_set_two.add((resource[0], resource[1]))
-            # Take intersection to find comm
+            # Take intersection to find num of common resources
             usage_similarity = len(resource_set_one.intersection(resource_set_two))
 
         random_sample = random_sample.append({"user_one_id": employee_one.id,
