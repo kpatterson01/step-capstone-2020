@@ -43,20 +43,21 @@ def load_resource_map_from_pickle():
     return resource_map
 
 def load_resource_map_from_csv():
-    LOAD_PATH = "../../data/smalldata/small_resource_table.csv"
+    LOAD_PATH = "../../data/user_resources.csv"
     resource_map = {}
     with open(LOAD_PATH, 'r', newline='') as f:
         reader = csv.reader(f)
+        next(reader) #skip header line
         for row in reader:
-            r = Resource(row[0],row[1])
+            r = Resource(row[4],row[5])
             if r not in resource_map:
                 resource_map[r] = set()
-            resource_map[r].add(row[2])
+            resource_map[r].add(int(row[0]))
     return resource_map
 
 
 def load_company():
-    LOAD_PATH = "../../data/smalldata/small_user.csv"
+    LOAD_PATH = "../../data/users.csv"
     company = set()
     with open(LOAD_PATH, 'r') as f:
         reader = csv.reader(f)
@@ -103,8 +104,8 @@ if __name__ == "__main__":
     resource_map = load_resource_map_from_csv()
     company = load_company()
 
-    example_resource = Resource(6371059,203)
-    example_rule = 'department == 14'
+    example_resource = Resource(411231,2072)
+    example_rule = 'department == 13'
     syntax_tree = Syntax_Tree(example_rule)
     metrics = get_metrics(example_resource, syntax_tree, resource_map, company)
     print(metrics)
