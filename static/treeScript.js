@@ -42,14 +42,12 @@ async function calculate() {
   }
 
   if(usageResponse.status == 200) {
-    document.getElementById("usage").innerHTML = 'Usage: '+ usageData.data;
+    document.getElementById("usage").innerHTML = 'Usage: '+ usageData.data + '%';
   } else {
     document.getElementById("usage").innerHTML = 'No resources found for one or more employee.';
   }
 }
 
-// if you're wondering why there is a huge JSON dictionary that takes up 5000 lines of code here,
-// just go with it
 var treeData =
 {
 

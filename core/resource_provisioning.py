@@ -37,8 +37,8 @@ def calculate_metrics(actual, predicted):
     recall = TP / (TP + FN)
     return precision, recall
 
-def load_resource_map_from_pickle():
-    LOAD_PATH = "../data/resource_map.pkl"
+def load_resource_map_from_pickle(file_path):
+    LOAD_PATH = file_path #"../data/resource_map.pkl"
     resource_map = pickle.load(open(LOAD_PATH,"rb"))
     return resource_map
 
@@ -57,8 +57,8 @@ def load_resource_map_from_csv(file_path):
     return resource_map
 
 
-def load_company():
-    LOAD_PATH = "../../data/users.csv"
+def load_company(file_path):
+    LOAD_PATH = file_path
     company = set()
     with open(LOAD_PATH, 'r') as f:
         reader = csv.reader(f)
@@ -103,7 +103,7 @@ def load_company():
 
 if __name__ == "__main__":
     resource_map = load_resource_map_from_csv("../../data/user_resources.csv")
-    company = load_company()
+    company = load_company("../../data/users.csv")
 
     example_resource = Resource(411231,2072)
     example_rule = 'department == 13'
