@@ -68,8 +68,8 @@ async function calculate() {
 
   // Display response on charts and sidebar
   if(provisionResponse.status == 200) {
-    document.getElementById("precision").innerHTML = 'Precision: '+ provisionData.data[0] + '%';
-    document.getElementById("recall").innerHTML = 'Recall: '+ provisionData.data[1] + '%';
+    document.getElementById("precision").innerHTML = 'Precision: '+ provisionData.data[0];
+    document.getElementById("recall").innerHTML = 'Recall: '+ provisionData.data[1];
 
     precisionChart.data.datasets[0].data = [provisionData.data[0], 1 - provisionData.data[0]];
     recallChart.data.datasets[0].data = [provisionData.data[1], 1 - provisionData.data[1]];
