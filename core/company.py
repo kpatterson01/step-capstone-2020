@@ -66,21 +66,8 @@ class Company:
         Returns:
             hierarchy: A dictionary representing managerial hierarchy.
         """
-        top_managers = []
-        for employee in employees:
-            if(employee.manager_id == 258004):
-                top_managers.append(employee)
-
-        dummy_ceo = Employee({"id":258004,
-                            "department":-100,
-                            "cost_center":-100,
-                            "manager_id":258004,
-                            "location":-100,
-                            "lowest_dir_id":-100,
-                            "job_family":-100 })
-        dummy_ceo.reports = top_managers
-
-        return self.__to_dict(dummy_ceo)
+        ceo = self.search(258004)
+        return self.__to_dict(ceo) #Create hierarchal structure starting with CEO: 258004
 
     def __to_dict(self, employee):
         """ Recursive function to create dictonary hierarchy """
@@ -136,16 +123,18 @@ class Company:
             return 0
         employee_one_managers = set()
         employee_two_managers = set()
-        if(employee_one.manager_id == 258004): employee_one_managers.add(employee_one.id)
-        if(employee_two.manager_id == 258004): employee_two_managers.add(employee_two.id)
+        if(employee_one.manager_id == -1): employee_one_managers.add(employee_one.id)
+        if(employee_two.manager_id == -1): employee_two_managers.add(employee_two.id)
         while(len(employee_one_managers.intersection(employee_two_managers)) == 0):
-            employee_one_managers.add(employee_one.manager_id)
-            employee_two_managers.add(employee_two.manager_id)
-            if(employee_one.manager_id != 258004):
+            if(employee_one.manager_id != -1):
+                employee_one_managers.add(employee_one.manager_id)
                 employee_one = self.search(employee_one.manager_id)
-            if(employee_two.manager_id != 258004):
+            if(employee_two.manager_id != -1):
+                employee_two_managers.add(employee_two.manager_id)
                 employee_two = self.search(employee_two.manager_id)
+
         return max(len(employee_one_managers), len(employee_two_managers))
+
 
     def usage_similarity(self, employee_one, employee_two):
         """ Returns a usage similarity metric of two employees in the managerial hierarchy based

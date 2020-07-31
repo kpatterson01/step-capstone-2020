@@ -12,6 +12,7 @@ async function calculate() {
     "employee_two_id": employee_two_id.value
   }
 
+  // Make requests to Flask backend
   var distanceResponse = await fetch(`${window.origin}/api/distance`, {
     method: "POST",
     headers: {
@@ -28,14 +29,12 @@ async function calculate() {
     body: JSON.stringify(data)
   })
 
-  console.log(distanceResponse.status);
-  console.log(usageResponse.status);
-
   var distanceData = await distanceResponse.json();
   var usageData = await usageResponse.json();
   console.log(distanceData);
   console.log(usageData);
 
+  // Display metrics on sidebar
   if(distanceResponse.status == 200) {
     document.getElementById("distance").innerHTML = 'Distance: '+ distanceData.data;
   } else {
@@ -49,6 +48,8 @@ async function calculate() {
   }
 }
 
+// if you're wondering why there is a huge JSON dictionary that takes up 5000 lines of code here,
+// just go with it
 var treeData =
 {
 

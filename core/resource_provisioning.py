@@ -1,10 +1,10 @@
 # This file contains some useful functions for metrics regarding provisioning
 # Author: Dean Alvarez
 import pickle
-from employee import Employee
-from resource import Resource
+from .employee import Employee
+from .resource import Resource
 import csv
-from parsing.syntax_tree import Syntax_Tree 
+from .parsing.syntax_tree import Syntax_Tree
 import timeit
 
 # gets provisioning metrics for a given resource given a rule
@@ -42,8 +42,9 @@ def load_resource_map_from_pickle():
     resource_map = pickle.load(open(LOAD_PATH,"rb"))
     return resource_map
 
-def load_resource_map_from_csv():
-    LOAD_PATH = "../../data/user_resources.csv"
+
+def load_resource_map_from_csv(file_path):
+    LOAD_PATH = file_path
     resource_map = {}
     with open(LOAD_PATH, 'r', newline='') as f:
         reader = csv.reader(f)
@@ -101,7 +102,7 @@ def load_company():
 
 
 if __name__ == "__main__":
-    resource_map = load_resource_map_from_csv()
+    resource_map = load_resource_map_from_csv("../../data/user_resources.csv")
     company = load_company()
 
     example_resource = Resource(411231,2072)
@@ -109,4 +110,3 @@ if __name__ == "__main__":
     syntax_tree = Syntax_Tree(example_rule)
     metrics = get_metrics(example_resource, syntax_tree, resource_map, company)
     print(metrics)
-

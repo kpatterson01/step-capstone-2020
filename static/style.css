@@ -1,7 +1,7 @@
 body {
 	background-color: #121B48;
-        margin: 0;
-        padding: 0;
+    margin: 0;
+    padding: 0;
 	color: white;
 
 }
@@ -22,7 +22,7 @@ nav {
 .nav-links {
 	display: flex;
 	justify-content: space-around;
-	width: 30%;
+	width: 20%;
 }
 
 nav li {
@@ -44,17 +44,23 @@ nav a:hover {
 .center-title {
 	margin-left: auto;
 	margin-right: auto;
-        margin-top: 75px;
-	text-align: center;
+    margin-top: 75px;
+	text-align: center; 
 }
 
 .title-txt {
 	font-size: 250%;
+    margin-top: 0px;  
 }
 
-.tools-txt {
-	margin-top: 10px;
+.acrym-txt {
+	margin-top: -20px;
 	font-size: 150%;
+}
+
+.motto-txt {
+    margin-top: -10px; 
+    font-style: italic; 
 }
 
 .card {
@@ -99,5 +105,16 @@ nav a:hover {
 }
 
 .card-text {
-	margin-top: 200px;
+	/*margin-top: 200px;*/
+}
+
+.tree-img {
+    width: 300px;
+    height: 250px; 
+    padding-bottom: 0px; 
+}
+
+.pie-img {
+    width: 300px;
+    height: 250px; 
 }

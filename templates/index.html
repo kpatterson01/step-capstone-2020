@@ -2,16 +2,16 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>SAM</title>
+		<title>S.A.M</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 	</head>
 	<body>
 		<!--Navigation Bar-->
 		<nav>
 			<div class="logo">
-				<h4>SAM: Google STEP Capstone 2020</h4>
+				<h4>S.A.M: Google STEP Capstone 2020</h4>
 			</div>
-			<ul>
+			<ul class="nav-links">
 				<li><a href="research.html">Mission</a></li>
 				<li><a href="research.html">Research</a></li>
 				<li><a href="research.html">The Team</a></li>
@@ -20,9 +20,9 @@
 
 		<!--Web Title-->
 		<div class="center-title">
-			<h1 class="title-txt">SAM</h1>
-			<h6 class="tools-txt">Smarter Access Management</h6>
-			<h8>Offering you better access and peace of mind.</h8>
+			<h1 class="title-txt">S.A.M</h1>
+			<h6 class="acrym-txt">Smarter Access Management</h6>
+			<h8 class="motto-txt">Offering you better access and peace of mind.</h8>
 		</div>
 
 		<!--Tool Cards-->
@@ -33,6 +33,7 @@
 						<a href="hierachyTree.html">
 						<div class="card-body">
 							<h5 class="card-title">Company Hierarchy Tree</h5>
+                            <img src="/static/images/tree.png" class="tree-img" alt="Hierarchy Tree">
 							<p class="card-text">Visualize Company Hierarchy tree and determine employee and resource usage similarity.</p>
 						</div>
 						</a>
@@ -41,7 +42,8 @@
 						<a href="provisionMetrics.html">
 						<div class="card-body">
 							<h5 class="card-title">Provisioning Metrics</h5>
-							<p class="card-text">Get insights on precision and recall of provisioning a resource to your team.</p>
+							<img src="/static/images/pie.png" class="pie-img" alt="Pie Chart">
+                            <p class="card-text">Get insights on precision and recall of provisioning a resource to your team.</p>
 						</div>
 						</a>
 					</div>
