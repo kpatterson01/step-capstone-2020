@@ -26,7 +26,7 @@ class TestManagerialHierarchy(unittest.TestCase):
         #     1       2       8
         #                   7
 
-        self.actual_hierarchy = { "Employee": -100, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1},
+        self.actual_hierarchy = { "Employee": 0, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1},
                                                                                 {"Employee": 2 },
                                                                                 {"Employee": 8, "Reports":[ {"Employee": 7 }]}
                                                                         ]}

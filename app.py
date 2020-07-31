@@ -98,8 +98,7 @@ def calculate_provisioning():
     except Exception as e:
         print(e)
         return failure_response("Invalid rule or resource passed.", 500)
-    # return success_response(rp_metrics)
-    return success_response((.92, .23))
+    return success_response(rp_metrics)
 
 if __name__ == "__main__":
     app.run()
