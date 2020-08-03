@@ -24,8 +24,8 @@
 /*Hierachy Tree*/
 .node circle {
     fill: black;
-    stroke: black;
-    stroke-width: 3px;
+    stroke: steelblue;
+    stroke-width: 1.5px;
 }
 
 .node text {
