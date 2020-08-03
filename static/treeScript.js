@@ -48,9 +48,7 @@ async function calculate() {
   }
 }
 
-var treeData =
-{
-
+var treeData ={
   "name": 258004,
   "children": [
     {
@@ -5606,9 +5604,7 @@ var treeData =
       ]
     }
   ]
-}
-
-
+};
 
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
@@ -5624,15 +5620,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
   .attr("transform", "translate("
         + margin.left + "," + margin.top + ")");
-
-//load the external data
-/*d3.json("data.json", function(error, treeData) {
-    root = treeData[0];
-    updata(root);
-});*/
-
-
-var i = 0,
+  var i = 0,
   duration = 750,
   root;
 
@@ -5689,7 +5677,7 @@ nodeEnter.append('circle')
     .attr('class', 'node')
     .attr('r', 1e-6)
     .style("fill", function(d) {
-        return d._children ? "black" : "#fff";
+        return d._children ? "lightsteelblue" : "#fff";
     });
 
 // Add labels for the nodes
@@ -5709,16 +5697,35 @@ var nodeUpdate = nodeEnter.merge(node);
 // Transition to the proper position for the node
 nodeUpdate.transition()
   .duration(duration)
-  .attr("transform", function(d) {
-
+  .attr("transform", function(d) { 
       return "translate(" + d.y + "," + d.x + ")";
    });
 
 // Update the node attributes and style
-nodeUpdate.select('circle.node')
-  .attr('r', 5)
+// Highlight pathway between two nodes 
+nodeUpdate.select('circle.node') 
+  .attr('r', 4.5)
   .style("fill", function(d) {
-      return d._children ? "black" : "#fff";
+    if(d.data.class === "selected") {  
+      return "#ff0"; //yellow
+    } 
+    if (d.data.class === "found"){
+      return "#ff4136"; //red
+    }
+    else if(d._children){
+      return "lightsteelblue"; 
+    } 
+    else{
+      return "#fff";
+    }
+  })
+  .style("stroke", function(d) {  
+    if (d.data.class === "selected") {
+      return "#ff0"; 
+    }
+    if(d.class === "found"){
+      return "#ff4136"; 
+    } 
   })
   .attr('cursor', 'pointer');
 
@@ -5744,6 +5751,7 @@ nodeExit.select('text')
 // Update the links...
 var link = svg.selectAll('path.link')
     .data(links, function(d) { return d.id; });
+   
 
 // Enter any new links at the parent's previous position.
 var linkEnter = link.enter().insert('path', "g")
@@ -5754,12 +5762,17 @@ var linkEnter = link.enter().insert('path', "g")
     });
 
 // UPDATE
-var linkUpdate = linkEnter.merge(link);
+var linkUpdate = linkEnter.merge(link); /** Link gets called when it is being drawn */
 
 // Transition back to the parent element position
 linkUpdate.transition()
     .duration(duration)
-    .attr('d', function(d){ return diagonal(d, d.parent) });
+    .attr('d', function(d){ return diagonal(d, d.parent) })
+    .style("stroke", (d) => {
+      if (d.data.class === "found") {
+        return "#ff4136"; //red
+      }
+    });
 
 // Remove any exiting links
 var linkExit = link.exit().transition()
@@ -5787,7 +5800,7 @@ function diagonal(s, d) {
   return path
 }
 
-// Toggle children on click.
+// Toggle children on click. - maybe beed to also put ifFound()
 function click(d) {
   if (d.children) {
       d._children = d.children;
@@ -5799,3 +5812,169 @@ function click(d) {
   update(d);
 }
 }
+
+
+/*Traverses through tree to find correct path between
+two nodes*/
+function buildPathFrom(node, dest, path) {
+  if(node.name === dest) { 
+    //node is equal to dest 
+    path.push(node);
+    return path; 
+  } else if (node.children || node._children) { 
+    //Not the node we want but has children 
+    let children = (node.children) ? node.children : node._children; 
+    for (let i = 0; i < children.length; i++) {
+      path.push(children[i]); 
+      let found = buildPathFrom(children[i], dest, path); 
+      if (found) {
+        return path; 
+      } else {
+        path.pop(); 
+      }
+    }
+  } else {
+     //At the end of the branch and node was not found
+    return false; 
+  }
+}
+
+//return the path 
+function getPath(start, end, tree) {
+  let path = buildPathFrom(findNode(start, tree), end, []); 
+  return path; 
+}
+
+//checks root 
+function isRoot (node) {
+  return node.name === "1"; 
+}
+
+//if node is in path label it as found
+function markAsFound(node) {
+  node.class = "found"; 
+}
+
+function expandChildren(node) { //need to work on! 
+  if (node._children) {
+    node.children = node._children; 
+    node._children = null; 
+  }
+}
+
+//highlights path
+function highlightPath (path) {
+  for (const node of path) {
+    if (!isRoot(node)) {
+      markAsFound(node); 
+      expandChildren(node); 
+      update(node); 
+    }
+  }
+}
+
+//Selects node, when user enters in text box 1
+let selectedUser1; 
+$("#user_1").on("input", () => {
+  let search = $("#user_1").val();
+  search = parseInt(search);  
+  console.log("search:", search); 
+  if (search) {
+    let currentNode = findNode(search, treeData); 
+    console.log("currentnode", currentNode);
+    if (currentNode === null) {
+      return; 
+    } 
+    if (selectedUser1 && currentNode !== selectedUser1) {
+      deselect(selectedUser1); 
+      select(currentNode); 
+      selectedUser1 = currentNode; 
+    } else {
+      select(currentNode); 
+      selectedUser1 = currentNode; 
+    }
+  }
+});
+
+//Selects node, when user enters in text box 2 
+let selectedUser2; 
+$("#user_2").on("input", () => {
+  let search = $("#user_2").val();
+  search = parseInt(search);  
+  console.log("search2:", search); 
+  if (search) {
+    let currentNode = findNode(search, treeData); 
+    console.log("currentnode", currentNode);
+    if (currentNode === null) {
+      return; 
+    } 
+    if (selectedUser2 && currentNode !== selectedUser2) {
+      deselect(selectedUser2); 
+      select(currentNode); 
+      selectedUser2 = currentNode; 
+    } else {
+      select(currentNode); 
+      selectedUser2 = currentNode; 
+    }
+  }
+});
+
+//Returns user's input (target) if found in tree 
+function findNode(target, currentNode) {
+  //if target is the current node return it 
+  if (target == currentNode.name) {
+    return currentNode; 
+  } else if ((children = getChildren(currentNode))) {
+    // for each node's children 
+    for (const child of children) {
+      //if the target is equal to found return it 
+      if ((found = findNode(target, child))){
+        return found; 
+      }
+    }
+  } else { 
+    //return null because it is not in the tree 
+    return null; 
+  }
+}
+
+//Returns children of node if node has any 
+function getChildren(node) {  
+  return node.children || node._children; 
+}
+
+//Labels the node as selected if highlighted
+function select(node) {
+  node.class = "selected"; 
+  update(node); 
+}
+
+//Labels the node as deselected to un-highlight 
+function deselect(node) {
+  node.class = ""; 
+  update(node); 
+}
+
+/*when button is clicked on, highlight path between
+  the two inputs 
+*/
+$( "#btnsearchPath" ).click(() => {
+  let user1 = $("#user_1").val(); 
+  console.log("User 1: " + user1); 
+  let user2 = $("#user_2").val(); 
+  console.log("User 2: " + user2); 
+
+  user1 = parseInt(user1); 
+  user2 = parseInt(user2);
+
+  if(!user1 || !user2) {
+    alert("Please enter 2 users!")
+  }
+
+  let path = getPath(user1, user2, treeData); 
+  highlightPath(path); 
+  console.log(path); 
+  console.log(findNode("1", treeData)); 
+})
+
+
