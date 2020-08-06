@@ -54,7 +54,7 @@ async function calculate() {
   }
   console.log(data);
 
-  //Make request to Flask backend
+  //Make requests to backend
   var provisionResponse = await fetch(`${window.origin}/api/provisioning`, {
     method: "POST",
     headers: {

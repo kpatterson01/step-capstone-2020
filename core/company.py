@@ -19,7 +19,7 @@ class Company:
         employees: An array of employee objects with all employees in the company.
     """
 
-    def __init__(self, employees):
+    def __init__(self, employees, ceo):
         """ Creates Google company.
 
         Calls __create_directory method that implements manager hierarchy tree based on the list of
@@ -27,8 +27,10 @@ class Company:
 
         Args:
             employees: A list of employee objects.
+            ceo: An int representing where the managerial hierarchy should start., CEO manager is always -1
         """
         self.company = self.__create_directory(employees)
+        self.ceo = int(ceo)
         self.hierarchy = self.__create_hierarchy(employees)
         # self.depth = self.__max_depth(employees)
         self.num_employees = len(employees)
@@ -66,8 +68,8 @@ class Company:
         Returns:
             hierarchy: A dictionary representing managerial hierarchy.
         """
-        ceo = self.search(258004)
-        return self.__to_dict(ceo) #Create hierarchal structure starting with CEO: 258004
+        ceo = self.search(self.ceo)
+        return self.__to_dict(ceo) #Create hierarchal structure starting with CEO
 
     def __to_dict(self, employee):
         """ Recursive function to create dictonary hierarchy """
@@ -91,6 +93,8 @@ class Company:
     #                 employee_manager = self.company.get(employee_manager.manager_id)
     #         if(len(employee_managers) > max_depth): max_depth = len(employee_managers)
     #     return max_depth
+
+
 
     def search(self, employee_id):
         """ Searches for and returns the employee object given their id.
@@ -148,7 +152,7 @@ class Company:
             employee_two: A employee object.
 
         Returns:
-            metric: An float representing their usage similarity.
+            metric: A float representing their usage similarity.
         """
         employee_one_resources = set(employee_one.resources)
         employee_two_resources = set(employee_two.resources)

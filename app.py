@@ -1,7 +1,7 @@
 #===================================================
 # S. A. M: Smarter Access Management
 # An internal tool to help employees make better access decisions for security and peace of mind.
-# STEP Capstone2020: Kayla Patterson, Dean Alvarez, Tedi Mitiku
+# STEP Capstone 2020: Kayla Patterson, Dean Alvarez, Tedi Mitiku
 #===================================================
 from flask import Flask, request, render_template
 import json, pickle, csv
@@ -12,7 +12,7 @@ from capstone2020.core.employee import Employee
 from capstone2020.core.resource import Resource
 import capstone2020.core.resource_provisioning as rp
 from capstone2020.core.parsing.syntax_tree import Syntax_Tree
-
+import capstone2020.core.usage_similarity as usage
 
 app = Flask(__name__)
 
@@ -58,7 +58,7 @@ def calculate_distance():
         distance = company.distance(employee_one, employee_two)
     except Exception as e:
         print(e)
-        return failure_response("One or more employees not found.", 500)
+        return failure_response("One or more employees not found.", 404)
     return success_response(distance)
 
 @app.route("/api/usage", methods=["POST"])
@@ -69,28 +69,17 @@ def calculate_usage():
         employee_two = company.search(int(body.get("employee_two_id")))
     except Exception as e:
         print(e)
-        return failure_response("One or more employees not found in company.", 500)
+        return failure_response("One or more employees not found in company.", 404)
 
     # Retrieve list of resources for employes
     employee_one_resources = employee_resources.get(str(employee_one.id))
     employee_two_resources = employee_resources.get(str(employee_two.id))
+
     # Check if no resources attached to employee
     if(employee_one_resources is None or employee_two_resources is None):
-        return failure_response("No usage data for one or both of these employees", 500)
+        return failure_response("No usage data for one or both of these employees.", 500)
     else:
-        # If so create set of tuples with corresponding resources for each employee
-        resource_set_one = set()
-        resource_set_two = set()
-        for resource in employee_one_resources:
-            resource_set_one.add((resource[0], resource[1]))
-        for resource in employee_two_resources:
-            resource_set_two.add((resource[0], resource[1]))
-        num_in_common = len(resource_set_one.intersection(resource_set_two))
-        num_total = len(resource_set_one) + len(resource_set_two) - num_in_common
-        if(num_total == 0 or num_in_common == 0):
-            usage_similarity = 0
-        else:
-            usage_similarity = int((num_in_common/num_total)*100)
+        usage_similarity = usage.usage_similarity(employee_one_resources, employee_two_resources)
     return success_response(usage_similarity)
 
 @app.route("/api/provisioning", methods=["POST"])
@@ -105,7 +94,7 @@ def calculate_provisioning():
         rp_metrics = rp.get_metrics(resource, ast, resource_employee_map, employee_set)
     except Exception as e:
         print(e)
-        return failure_response("Invalid rule or resource passed.", 500)
+        return failure_response("Invalid rule or resource passed.", 404)
     rp_metrics = (float("{:.2f}".format(rp_metrics[0])), float("{:.2f}".format(rp_metrics[1])))
     return success_response(rp_metrics)
 

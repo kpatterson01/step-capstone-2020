@@ -12,7 +12,7 @@ async function calculate() {
     "employee_two_id": employee_two_id.value
   }
 
-  // Make requests to Flask backend
+  //Make requests to backend
   var distanceResponse = await fetch(`${window.origin}/api/distance`, {
     method: "POST",
     headers: {
