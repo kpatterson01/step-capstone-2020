@@ -20,17 +20,17 @@ class TestManagerialHierarchy(unittest.TestCase):
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 7, "department": 10, "cost_center":10, "manager_id":8,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
+        self.company = Company(self.employees, 0)
         # Company:
         #             0
         #     1       2       8
         #                   7
 
-        self.actual_hierarchy = { "Employee": 0, "Reports": [ {"Employee": 0, "Reports":[ {"Employee": 1},
-                                                                                {"Employee": 2 },
-                                                                                {"Employee": 8, "Reports":[ {"Employee": 7 }]}
+        self.actual_hierarchy = {"Employee": 0, "Reports":[ {"Employee": 1},
+                                                             {"Employee": 2 },
+                                                             {"Employee": 8, "Reports":[ {"Employee": 7 }]}
                                                                         ]}
-                                                                ]}
+
     def test_hierarchy(self):
         # Test that the dictionary hierarchy is created correctly
         company_hierarchy = self.company.hierarchy
@@ -60,7 +60,7 @@ class TestMaxDepth(unittest.TestCase):
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 4, "department": 10, "cost_center":10, "manager_id":18,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
+        self.company = Company(self.employees, 0)
         # Company One:
         #             0
         #     1       2       8
@@ -79,7 +79,7 @@ class TestSearch(unittest.TestCase):
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 14, "department": 10, "cost_center":10, "manager_id":2,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
+        self.company = Company(self.employees, 0)
         self.actual_employee = Employee({ "id": 14, "department": 10, "cost_center":10, "manager_id":2,
                                         "location": 10, "lowest_dir_id":10, "job_family": 10})
 
@@ -110,7 +110,7 @@ class TestDistance(unittest.TestCase):
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 12, "department": 10, "cost_center":10, "manager_id":8,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
+        self.company = Company(self.employees, 0)
         # Company:
         #             0
         #     1       2       8
@@ -161,7 +161,7 @@ class TestUsageSimilarity(unittest.TestCase):
                                     "location": 10, "lowest_dir_id":10, "job_family": 10}),
                         Employee({   "id": 1, "department": 10, "cost_center":10, "manager_id":5,
                                     "location": 10, "lowest_dir_id":10, "job_family": 10})]
-        self.company = Company(self.employees)
+        self.company = Company(self.employees, 0)
         self.resource_one = Resource(1, 2)
         self.resource_two = Resource(5, 6)
         self.resource_three = Resource(1, 4)

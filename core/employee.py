@@ -36,6 +36,7 @@ class Employee:
         self.location = int(float(attributes.get("location")))
         self.lowest_dir_id = int(float(attributes.get("lowest_dir_id")))
         self.job_family = int(float(attributes.get("job_family")))
+        # self.person_type = int(float(attributes.get("person_type"))) 
         self.resources = [] #List of Resource objects from resource.py module
         self.reports = []
 

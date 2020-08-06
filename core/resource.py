@@ -24,10 +24,7 @@ class Resource:
         return '(Resource: ' + f'{self.attr_one}' + ', ' + f'{self.attr_two}' + ')'
 
     def __eq__(self, resource):
-        """ Comparing if two resources are the same.
-
-        Two resource with equal attr_one and attr_two refer to the same resource.
-        """
+        """ Two resource with equal attr_one and attr_two refer to the same resource. """
         if not isinstance(resource, type(self)):
             return NotImplemented
         else:

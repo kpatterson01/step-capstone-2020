@@ -14,7 +14,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 user_data = pd.read_csv("../../data/googler_attribute_table.csv")
 user_data = user_data.fillna(0) #Replace null values with 0
 
-#Variable to adjust features to include (b/c sample data missing a column)
+#Variable to adjust features to include (sample data is missing a column)
 num_col = 6
 
 #Normalize Data
