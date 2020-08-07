@@ -5609,7 +5609,7 @@ var treeData ={
 // Set the dimensions and margins of the diagram
 var margin = {top: 20, right: 90, bottom: 30, left: 90},
   width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+  height = 900 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 // appends a 'group' element to 'svg'
@@ -5617,6 +5617,11 @@ var margin = {top: 20, right: 90, bottom: 30, left: 90},
 var svg = d3.select("body").append("svg")
   .attr("width", width + margin.right + margin.left)
   .attr("height", height + margin.top + margin.bottom)
+  .call(
+    d3.zoom().on("zoom", function() {
+        svg.attr("transform", d3.event.transform); 
+    })
+  )
   .append("g")
   .attr("transform", "translate("
         + margin.left + "," + margin.top + ")");
@@ -5710,6 +5715,8 @@ nodeUpdate.select('circle.node')
       return "#ff0"; //yellow
     } 
     if (d.data.class === "found"){
+      //show pathway of hidden nodes 
+      showHidden(d); 
       return "#ff4136"; //red
     }
     else if(d._children){
@@ -5811,7 +5818,16 @@ function click(d) {
     }
   update(d);
 }
+
+
+function showHidden(d) {
+    //if this node has hidden children 
+    if (d._children) {
+        d.children = d._children; 
+        d._children = null; 
+    }
 }
+} //end of update function
 
 
 /*Traverses through tree to find correct path between
@@ -5841,7 +5857,7 @@ function buildPathFrom(node, dest, path) {
 
 //return the path 
 function getPath(start, end, tree) {
-  let path = buildPathFrom(findNode(start, tree), end, []); 
+  let path = buildPathFrom(tree, end, []);  
   return path; 
 }
 
