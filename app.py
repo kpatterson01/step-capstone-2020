@@ -45,9 +45,9 @@ def hierachy_tree():
 def provision_metrics():
     return render_template("provisionMetrics.html")
 
-@app.route("/research.html")
+@app.route("/team.html")
 def research():
-    return render_template("research.html")
+    return render_template("team.html")
 
 @app.route("/api/distance", methods=["POST"])
 def calculate_distance():
